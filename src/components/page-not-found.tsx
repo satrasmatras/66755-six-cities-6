@@ -1,9 +1,9 @@
 import * as React from 'react';
-import PlaceCard from "./place-card/place-card";
 import {Link} from "react-router-dom";
 import {MAIN_ROUTE} from "../routes";
+import {ReactElement} from "react";
 
-const PageNotFound = () => {
+const PageNotFound = (): ReactElement => {
   return (
     <>
       <div style={{display: `none`}}>
