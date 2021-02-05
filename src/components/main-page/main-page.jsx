@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from "../place-card/place-card";
-import PlacePropType from "../place-card/model";
 
-const MainPage = ({places}) => {
+const MainPage = ({placesCount}) => {
   return (
     <>
       <div style={{display: `none`}}>
@@ -113,7 +112,7 @@ const MainPage = ({places}) => {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
                   {
-                    places.map((place, i) => <PlaceCard key={i} place={place} />)
+                    [...Array(placesCount).keys()].map((_, i) => <PlaceCard key={i}/>)
                   }
                 </div>
               </section>
@@ -129,7 +128,7 @@ const MainPage = ({places}) => {
 };
 
 MainPage.propTypes = {
-  places: PropTypes.arrayOf(PlacePropType).isRequired
+  placesCount: PropTypes.number.isRequired
 };
 
 export default MainPage;

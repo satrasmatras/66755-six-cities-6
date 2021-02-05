@@ -1,10 +1,11 @@
 import React from 'react';
 import MainPage from "../main-page/main-page";
-import {MOCK_PLACES} from "../../data";
+
+const PLACES_COUNT = 5;
 
 const App = () => {
   return (
-    <MainPage places={MOCK_PLACES} />
+    <MainPage placesCount={PLACES_COUNT}/>
   );
 };
 
