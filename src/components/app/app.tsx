@@ -6,6 +6,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import {FAVORITES_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, OFFER_ROUTE} from "../../routes";
 import Favorites from "../favorites/favorites";
 import PlacePage from "../place-page/place-page";
+import PageNotFound from "../page-not-found";
 
 const PLACES_COUNT = 5;
 
@@ -26,7 +27,7 @@ const App = (): ReactElement => {
           <PlacePage />
         </Route>
         <Route>
-          <h1>Page Not Found</h1>
+          <PageNotFound />
         </Route>
       </Switch>
     </BrowserRouter>
