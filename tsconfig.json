@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "target": "es5",
+    "outDir": "./public/",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "sourceMap": true
+  },
+  "include": ["src/**/*"]}

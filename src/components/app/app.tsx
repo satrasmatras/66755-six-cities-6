@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import MainPage from "../main-page/main-page";
 
 const PLACES_COUNT = 5;
