@@ -1,6 +1,7 @@
 import * as React from 'react';
+import {ReactElement} from "react";
 
-const PlaceCard = () => {
+const PlaceCard = (): ReactElement => {
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">

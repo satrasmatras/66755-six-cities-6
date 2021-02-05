@@ -1,17 +1,16 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import PlaceCard from "../place-card/place-card";
+import {ReactElement} from "react";
 
 interface MainPageProps {
   placesCount: number
 }
 
-const MainPage = (props: MainPageProps) => {
+const MainPage = (props: MainPageProps): ReactElement => {
   const {
     placesCount
   } = props;
-
-  debugger;
 
   return (
     <>
