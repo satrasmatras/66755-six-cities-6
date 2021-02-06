@@ -1,12 +1,11 @@
-import * as React from 'react';
-import MainPage from "../main-page/main-page";
-import Login from "../login/login";
-import {ReactElement} from 'react';
+import React, {ReactElement} from 'react';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
-import {FAVORITES_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, OFFER_ROUTE} from "../../routes";
-import Favorites from "../favorites/favorites";
-import PlacePage from "../place-page/place-page";
-import PageNotFound from "../page-not-found";
+import Routes from "../../routes";
+import MainPage from "../main-page";
+import Login from "../login";
+import Favorites from "../favorites";
+import PlacePage from "../place-page";
+import NotFoundPage from "../not-found-page";
 
 const PLACES_COUNT = 5;
 
@@ -14,20 +13,20 @@ const App = (): ReactElement => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path={MAIN_ROUTE} exact>
+        <Route path={Routes.MAIN} exact>
           <MainPage placesCount={PLACES_COUNT}/>
         </Route>
-        <Route path={LOGIN_ROUTE} exact>
+        <Route path={Routes.LOGIN} exact>
           <Login />
         </Route>
-        <Route path={FAVORITES_ROUTE} exact>
+        <Route path={Routes.FAVORITES} exact>
           <Favorites />
         </Route>
-        <Route path={OFFER_ROUTE} exact>
+        <Route path={Routes.OFFER} exact>
           <PlacePage />
         </Route>
         <Route>
-          <PageNotFound />
+          <NotFoundPage />
         </Route>
       </Switch>
     </BrowserRouter>

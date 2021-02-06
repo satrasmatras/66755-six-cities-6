@@ -1,7 +1,6 @@
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import PlaceCard from "../place-card/place-card";
-import {ReactElement} from "react";
+import React, {ReactElement} from 'react';
+import PropTypes from 'prop-types';
+import PlaceCard from "../place-card";
 
 interface MainPageProps {
   placesCount: number

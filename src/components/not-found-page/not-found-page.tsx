@@ -1,9 +1,8 @@
-import * as React from 'react';
+import React, {ReactElement} from 'react';
 import {Link} from "react-router-dom";
-import {MAIN_ROUTE} from "../routes";
-import {ReactElement} from "react";
+import Routes from "../../routes";
 
-const PageNotFound = (): ReactElement => {
+const NotFoundPage = (): ReactElement => {
   return (
     <>
       <div style={{display: `none`}}>
@@ -95,7 +94,7 @@ const PageNotFound = (): ReactElement => {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2>Oops. Page Not Found</h2>
-                <Link className="places__found" to={MAIN_ROUTE}>To main page...</Link>
+                <Link className="places__found" to={Routes.MAIN}>To main page...</Link>
               </section>
             </div>
           </div>
@@ -105,4 +104,4 @@ const PageNotFound = (): ReactElement => {
   );
 };
 
-export default PageNotFound;
+export default NotFoundPage;

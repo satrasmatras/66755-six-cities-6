@@ -16,3 +16,6 @@ plugins: ['react', '@typescript-eslint']
 settings:
   react:
     version: '16'
+
+rules:
+  no-shadow: off

@@ -1,7 +1,6 @@
-import * as React from 'react';
+import React, {ReactElement} from 'react';
 import {Link} from 'react-router-dom';
-import {MAIN_ROUTE} from '../../routes';
-import {ReactElement} from "react";
+import Routes from '../../routes';
 
 const Login = (): ReactElement => {
   return (
@@ -27,7 +26,7 @@ const Login = (): ReactElement => {
           <div className="container">
             <div className="header__wrapper">
               <div className="header__left">
-                <Link className="header__logo-link" to={MAIN_ROUTE}>
+                <Link className="header__logo-link" to={Routes.MAIN}>
                   <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
                 </Link>
               </div>
