@@ -1,16 +1,13 @@
 import React, {ReactElement} from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from "../place-card";
+import Offer from "../../models/offer";
 
 interface MainPageProps {
-  placesCount: number
+  offers: Offer[],
 }
 
-const MainPage = (props: MainPageProps): ReactElement => {
-  const {
-    placesCount
-  } = props;
-
+const MainPage = ({offers}: MainPageProps): ReactElement => {
   return (
     <>
       <div style={{display: `none`}}>
@@ -120,8 +117,7 @@ const MainPage = (props: MainPageProps): ReactElement => {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
                   {
-                    Array.from(Array(placesCount).keys())
-                      .map((_, i) => <PlaceCard key={i}/>)
+                    offers.map((offer, i) => <PlaceCard key={i} offer={offer}/>)
                   }
                 </div>
               </section>
@@ -137,7 +133,7 @@ const MainPage = (props: MainPageProps): ReactElement => {
 };
 
 MainPage.propTypes = {
-  placesCount: PropTypes.number.isRequired
+  offers: PropTypes.array
 };
 
 export default MainPage;

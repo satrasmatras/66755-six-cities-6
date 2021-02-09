@@ -1,20 +1,24 @@
 import React, {ReactElement} from 'react';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Routes from "../../routes";
+import PropTypes from "prop-types";
 import MainPage from "../main-page";
 import Login from "../login";
 import Favorites from "../favorites";
 import PlacePage from "../place-page";
 import NotFoundPage from "../not-found-page";
+import Offer from "../../models/offer";
 
-const PLACES_COUNT = 5;
+interface AppProps {
+  offers: Offer[],
+}
 
-const App = (): ReactElement => {
+const App = ({offers}: AppProps): ReactElement => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={Routes.MAIN} exact>
-          <MainPage placesCount={PLACES_COUNT}/>
+          <MainPage offers={offers} />
         </Route>
         <Route path={Routes.LOGIN} exact>
           <Login />
@@ -31,6 +35,10 @@ const App = (): ReactElement => {
       </Switch>
     </BrowserRouter>
   );
+};
+
+App.PropTypes = {
+  offers: PropTypes.array,
 };
 
 export default App;

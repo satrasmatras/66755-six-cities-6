@@ -1,6 +1,12 @@
 import React, {ReactElement} from 'react';
+import PropTypes from 'prop-types';
+import Offer from "../../models/offer";
 
-const PlaceCard = (): ReactElement => {
+interface PlaceCardProps {
+  offer: Offer,
+}
+
+const PlaceCard = ({offer}: PlaceCardProps): ReactElement => {
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
@@ -37,6 +43,10 @@ const PlaceCard = (): ReactElement => {
       </div>
     </article>
   );
+};
+
+PlaceCard.PropTypes = {
+  offer: PropTypes.object,
 };
 
 export default PlaceCard;
