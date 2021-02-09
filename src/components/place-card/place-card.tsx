@@ -1,14 +1,16 @@
-import React, {ReactElement} from 'react';
+import React, {Dispatch, ReactElement} from 'react';
 import PropTypes from 'prop-types';
 import Offer from "../../models/offer";
 
 interface PlaceCardProps {
   offer: Offer,
+  handleHover: Dispatch<any>
 }
 
-const PlaceCard = ({offer}: PlaceCardProps): ReactElement => {
+const PlaceCard = ({offer, handleHover}: PlaceCardProps): ReactElement => {
+
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseEnter={() => handleHover(offer)}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
