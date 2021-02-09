@@ -45,7 +45,7 @@ const PlaceCard = ({offer}: PlaceCardProps): ReactElement => {
   );
 };
 
-PlaceCard.PropTypes = {
+PlaceCard.propTypes = {
   offer: PropTypes.object,
 };
 

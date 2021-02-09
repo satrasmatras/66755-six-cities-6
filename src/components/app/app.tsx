@@ -37,7 +37,7 @@ const App = ({offers}: AppProps): ReactElement => {
   );
 };
 
-App.PropTypes = {
+App.propTypes = {
   offers: PropTypes.array,
 };
 
