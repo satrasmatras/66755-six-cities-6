@@ -29,10 +29,10 @@ const OFFERS: Offer[] = [
       "zoom": 8
     },
     "maxAdults": 4,
-    "previewImage": `img/1.png`,
-    "price": 120,
+    "previewImage": `img/apartment-03.jpg`,
+    "price": 150,
     "rating": 4.8,
-    "title": `Beautiful & luxurious studio at great location`,
+    "title": `Beautiful & luxurious studio`,
     "type": `apartment`
   },
   {
@@ -63,10 +63,10 @@ const OFFERS: Offer[] = [
       "zoom": 8
     },
     "maxAdults": 4,
-    "previewImage": `img/1.png`,
-    "price": 120,
-    "rating": 4.8,
-    "title": `Beautiful & luxurious studio at great location`,
+    "previewImage": `img/apartment-03.jpg`,
+    "price": 200,
+    "rating": 4,
+    "title": `Luxury townhouse`,
     "type": `apartment`
   },
   {
@@ -97,9 +97,9 @@ const OFFERS: Offer[] = [
       "zoom": 8
     },
     "maxAdults": 4,
-    "previewImage": `img/1.png`,
-    "price": 120,
-    "rating": 4.8,
+    "previewImage": `img/apartment-02.jpg`,
+    "price": 350,
+    "rating": 3.4,
     "title": `Beautiful & luxurious studio at great location`,
     "type": `apartment`
   },
@@ -131,8 +131,8 @@ const OFFERS: Offer[] = [
       "zoom": 8
     },
     "maxAdults": 4,
-    "previewImage": `img/1.png`,
-    "price": 120,
+    "previewImage": `img/apartment-01.jpg`,
+    "price": 500,
     "rating": 4.8,
     "title": `Beautiful & luxurious studio at great location`,
     "type": `apartment`
