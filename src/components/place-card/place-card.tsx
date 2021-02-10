@@ -1,18 +1,20 @@
 import React, {Dispatch, ReactElement} from 'react';
 import PropTypes from 'prop-types';
-import Offer from "../../models/offer";
+import {Link} from "react-router-dom";
+import Offer, {calculateRatingBarWidth} from "../../models/offer";
+import PlaceCardTypes from "../../models/placeCardTypes";
 import {toCapitalize} from "../../utils";
-
-const WIDTH_PER_STAR = 20;
+import {getOfferRoute} from "../../routes";
 
 interface PlaceCardProps {
+  cardType: PlaceCardTypes,
   offer: Offer,
-  handleHover: Dispatch<any>
+  handleHover?: Dispatch<Offer>
 }
 
-const PlaceCard = ({offer, handleHover}: PlaceCardProps): ReactElement => {
-
+const PlaceCard = ({cardType, offer, handleHover}: PlaceCardProps): ReactElement => {
   const {
+    id,
     isPremium,
     isFavorite,
     previewImage,
@@ -22,19 +24,52 @@ const PlaceCard = ({offer, handleHover}: PlaceCardProps): ReactElement => {
     rating
   } = offer;
 
+  let articleClass = ``;
+  let imageWrapperClass = ``;
+  let cardInfoClass = ``;
+  let previewImageWidth;
+  let previewImageHeight;
+
+  const offerRoute = getOfferRoute(id);
+
+  switch (cardType) {
+    case PlaceCardTypes.FAVORITE:
+    {
+      articleClass = `favorites__card`;
+      imageWrapperClass = `favorites__image-wrapper`;
+      cardInfoClass = `favorites__card-info`;
+      previewImageWidth = 150;
+      previewImageHeight = 110;
+      break;
+    }
+    default: {
+      articleClass = `cities__place-card`;
+      imageWrapperClass = `cities__image-wrapper`;
+      previewImageWidth = 260;
+      previewImageHeight = 200;
+      break;
+    }
+  }
+
   return (
-    <article className="cities__place-card place-card" onMouseEnter={() => handleHover(offer)}>
+    <article className={`${articleClass} place-card`} onMouseEnter={() => handleHover(offer)}>
       {
         isPremium && <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
-        </a>
+      <div className={`${imageWrapperClass} place-card__image-wrapper`}>
+        <Link to={offerRoute}>
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={previewImageWidth}
+            height={previewImageHeight}
+            alt="Place image"
+          />
+        </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${cardInfoClass} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -49,12 +84,12 @@ const PlaceCard = ({offer, handleHover}: PlaceCardProps): ReactElement => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(WIDTH_PER_STAR * Math.round(rating))}%`}}/>
+            <span style={{width: `${calculateRatingBarWidth(rating)}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={offerRoute}>{title}</Link>
         </h2>
         <p className="place-card__type">{toCapitalize(type)}</p>
       </div>

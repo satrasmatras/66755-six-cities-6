@@ -4,7 +4,7 @@ import Routes from "../../routes";
 import PropTypes from "prop-types";
 import MainPage from "../main-page";
 import Login from "../login";
-import Favorites from "../favorites";
+import FavoritesPage from "../favorites-page";
 import PlacePage from "../place-page";
 import NotFoundPage from "../not-found-page";
 import Offer from "../../models/offer";
@@ -24,7 +24,7 @@ const App = ({offers}: AppProps): ReactElement => {
           <Login />
         </Route>
         <Route path={Routes.FAVORITES} exact>
-          <Favorites />
+          <FavoritesPage offers={offers}/>
         </Route>
         <Route path={Routes.OFFER} exact>
           <PlacePage />

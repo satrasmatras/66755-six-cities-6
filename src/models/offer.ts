@@ -1,3 +1,5 @@
+import {WIDTH_PER_STAR} from "../constants";
+
 interface Offer {
   id: number,
   bedrooms: number,
@@ -32,5 +34,9 @@ interface Offer {
   title: string,
   type: string
 }
+
+export const calculateRatingBarWidth = (rating: number): number => {
+  return WIDTH_PER_STAR * Math.round(rating);
+};
 
 export default Offer;

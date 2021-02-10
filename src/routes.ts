@@ -5,4 +5,6 @@ enum Routes {
   OFFER = `/offer/:id`
 }
 
+export const getOfferRoute = (id: number): string => `/offer/${id}`;
+
 export default Routes;
