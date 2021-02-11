@@ -1,4 +1,4 @@
-import React, {ReactElement, SyntheticEvent, useState} from 'react';
+import React, {ReactElement, Fragment, SyntheticEvent, useState} from 'react';
 
 interface RatingItem {
   title: string,
@@ -61,16 +61,17 @@ const CreateCommentForm = (): ReactElement => {
           RATING_ITEMS.map((ratingItem) => {
             const {title, value} = ratingItem;
             return (
-              <>
+              <Fragment key={`fragment-${value}`}>
                 <input
                   className="form__rating-input visually-hidden"
                   name="rating"
                   value={value}
                   id={`${value}-stars`}
                   type="radio"
-                  checked={data.rating === value}
+                  defaultChecked={data.rating === value}
                 />
                 <label
+                  id={`label-${value}-stars`}
                   htmlFor={`${value}-stars`}
                   className="reviews__rating-label form__rating-label"
                   title={title}
@@ -79,7 +80,7 @@ const CreateCommentForm = (): ReactElement => {
                     <use xlinkHref="#icon-star"></use>
                   </svg>
                 </label>
-              </>
+              </Fragment>
             );
           })
         }
