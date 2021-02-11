@@ -12,7 +12,7 @@ interface PlaceCardProps {
   handleHover?: Dispatch<Offer>
 }
 
-const PlaceCard = ({cardType, offer, handleHover}: PlaceCardProps): ReactElement => {
+const PlaceCard = ({cardType, offer, handleHover = null}: PlaceCardProps): ReactElement => {
   const {
     id,
     isPremium,
@@ -51,8 +51,24 @@ const PlaceCard = ({cardType, offer, handleHover}: PlaceCardProps): ReactElement
     }
   }
 
+  const handleMouseEnter = () => {
+    if (handleHover) {
+      handleHover(offer);
+    }
+  };
+
+  const handleMouseOut = () => {
+    if (handleHover) {
+      handleHover(null);
+    }
+  };
+
   return (
-    <article className={`${articleClass} place-card`} onMouseEnter={() => handleHover(offer)}>
+    <article
+      className={`${articleClass} place-card`}
+      onMouseEnter={handleMouseEnter}
+      onMouseOut={handleMouseOut}
+    >
       {
         isPremium && <div className="place-card__mark">
           <span>Premium</span>
