@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react';
 import PropTypes from 'prop-types';
 import Offer from "../../models/offer";
-import OffersList from "../offers-list";
+import OffersList from "../offersList";
 
 interface MainPageProps {
   offers: Offer[],

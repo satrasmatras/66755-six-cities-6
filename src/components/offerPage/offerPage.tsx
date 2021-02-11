@@ -5,14 +5,14 @@ import {getOfferById} from "../../services/offers";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
 import {formatDateToHuman, formatDateToMachine, toCapitalize} from "../../utils";
 import COMMENTS from "../../mocks/comments";
-import CreateCommentForm from "../create-comment-form";
+import CreateCommentForm from "../createCommentForm";
 
-interface PlacePageParams {
+interface OfferPageParams {
   id: string
 }
 
-const PlacePage = (): ReactElement => {
-  const {id} = useParams<PlacePageParams>();
+const OfferPage = (): ReactElement => {
+  const {id} = useParams<OfferPageParams>();
   const [offer, setOffer] = useState<Offer>(null);
 
   useEffect(() => {
@@ -300,4 +300,4 @@ const PlacePage = (): ReactElement => {
   );
 };
 
-export default PlacePage;
+export default OfferPage;

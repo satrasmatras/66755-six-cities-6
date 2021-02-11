@@ -2,17 +2,17 @@ import React, {Dispatch, ReactElement} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
-import PlaceCardTypes from "../../models/placeCardTypes";
+import OfferCardTypes from "../../models/offerCardTypes";
 import {toCapitalize} from "../../utils";
 import {getOfferRoute} from "../../routes";
 
-interface PlaceCardProps {
-  cardType: PlaceCardTypes,
+interface OfferCardProps {
+  cardType: OfferCardTypes,
   offer: Offer,
   handleHover?: Dispatch<Offer>
 }
 
-const PlaceCard = ({cardType, offer, handleHover = null}: PlaceCardProps): ReactElement => {
+const OfferCard = ({cardType, offer, handleHover = null}: OfferCardProps): ReactElement => {
   const {
     id,
     isPremium,
@@ -33,7 +33,7 @@ const PlaceCard = ({cardType, offer, handleHover = null}: PlaceCardProps): React
   const offerRoute = getOfferRoute(id);
 
   switch (cardType) {
-    case PlaceCardTypes.FAVORITE:
+    case OfferCardTypes.FAVORITE:
     {
       articleClass = `favorites__card`;
       imageWrapperClass = `favorites__image-wrapper`;
@@ -113,8 +113,8 @@ const PlaceCard = ({cardType, offer, handleHover = null}: PlaceCardProps): React
   );
 };
 
-PlaceCard.propTypes = {
+OfferCard.propTypes = {
   offer: PropTypes.object,
 };
 
-export default PlaceCard;
+export default OfferCard;

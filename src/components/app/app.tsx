@@ -2,11 +2,11 @@ import React, {ReactElement} from 'react';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Routes from "../../routes";
 import PropTypes from "prop-types";
-import MainPage from "../main-page";
+import MainPage from "../mainPage";
 import Login from "../login";
-import FavoritesPage from "../favorites-page";
-import PlacePage from "../place-page";
-import NotFoundPage from "../not-found-page";
+import FavoritesPage from "../favoritesPage";
+import OfferPage from "../offerPage";
+import NotFoundPage from "../notFoundPage";
 import Offer from "../../models/offer";
 
 interface AppProps {
@@ -27,7 +27,7 @@ const App = ({offers}: AppProps): ReactElement => {
           <FavoritesPage offers={offers}/>
         </Route>
         <Route path={Routes.OFFER} exact>
-          <PlacePage />
+          <OfferPage />
         </Route>
         <Route>
           <NotFoundPage />

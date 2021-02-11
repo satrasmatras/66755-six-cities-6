@@ -1,8 +1,8 @@
 import React, {ReactElement, useState} from "react";
 import PropTypes from "prop-types";
 import Offer from "../../models/offer";
-import PlaceCard from "../place-card";
-import PlaceCardTypes from "../../models/placeCardTypes";
+import OfferCard from "../offerCard";
+import OfferCardTypes from "../../models/offerCardTypes";
 
 interface OffersListProps {
   offers: Offer[],
@@ -16,8 +16,8 @@ const OffersList = ({offers}: OffersListProps): ReactElement => {
       {
         offers.map((offer, i) => {
           return (
-            <PlaceCard
-              cardType={PlaceCardTypes.CITY}
+            <OfferCard
+              cardType={OfferCardTypes.CITY}
               key={i}
               offer={offer}
               handleHover={setActiveOffer}
