@@ -1,7 +1,7 @@
 import React, {ReactElement, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import OfferCard from "../offerCard";
-import OfferCardTypes from "../../models/offerCardTypes";
+import OfferCard from "../offer-card";
+import OfferCardTypes from "../../models/offer-card-types";
 import Offer from "../../models/offer";
 import {toCapitalize} from "../../utils";
 

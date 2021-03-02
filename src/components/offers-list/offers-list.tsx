@@ -1,8 +1,8 @@
 import React, {ReactElement, useState} from "react";
 import PropTypes from "prop-types";
 import Offer from "../../models/offer";
-import OfferCard from "../offerCard";
-import OfferCardTypes from "../../models/offerCardTypes";
+import OfferCard from "../offer-card";
+import OfferCardTypes from "../../models/offer-card-types";
 
 interface OffersListProps {
   offers: Offer[],

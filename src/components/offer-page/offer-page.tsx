@@ -5,7 +5,7 @@ import {getOfferById} from "../../services/offers";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
 import {formatDateToHuman, formatDateToMachine, toCapitalize} from "../../utils";
 import COMMENTS from "../../mocks/comments";
-import CreateCommentForm from "../createCommentForm";
+import CreateCommentForm from "../create-comment-form";
 
 interface OfferPageParams {
   id: string

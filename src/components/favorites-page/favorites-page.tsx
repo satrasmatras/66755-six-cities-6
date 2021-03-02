@@ -2,7 +2,7 @@ import React, {ReactElement} from 'react';
 import {Link} from "react-router-dom";
 import Routes from "../../routes";
 import Offer from "../../models/offer";
-import FavoritesList from "../favoritesList";
+import FavoritesList from "../favorites-list";
 
 interface FavoritesPageProps {
   offers: Offer[],

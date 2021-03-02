@@ -1,7 +1,8 @@
 import React, {ReactElement} from 'react';
 import PropTypes from 'prop-types';
 import Offer from "../../models/offer";
-import OffersList from "../offersList";
+import OffersList from "../offers-list";
+import Map from "../map";
 
 interface MainPageProps {
   offers: Offer[],
@@ -118,7 +119,7 @@ const MainPage = ({offers}: MainPageProps): ReactElement => {
                 <OffersList offers={offers} />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"/>
+                <Map offers={offers}/>
               </div>
             </div>
           </div>

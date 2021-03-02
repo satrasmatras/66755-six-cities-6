@@ -2,11 +2,11 @@ import React, {ReactElement} from 'react';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Routes from "../../routes";
 import PropTypes from "prop-types";
-import MainPage from "../mainPage";
+import MainPage from "../main-page";
 import Login from "../login";
-import FavoritesPage from "../favoritesPage";
-import OfferPage from "../offerPage";
-import NotFoundPage from "../notFoundPage";
+import FavoritesPage from "../favorites-page";
+import OfferPage from "../offer-page";
+import NotFoundPage from "../not-found-page";
 import Offer from "../../models/offer";
 
 interface AppProps {

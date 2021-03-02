@@ -2,7 +2,7 @@ import React, {Dispatch, ReactElement} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
-import OfferCardTypes from "../../models/offerCardTypes";
+import OfferCardTypes from "../../models/offer-card-types";
 import {toCapitalize} from "../../utils";
 import {getOfferRoute} from "../../routes";
 
