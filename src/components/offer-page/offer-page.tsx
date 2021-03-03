@@ -3,7 +3,7 @@ import {Link, useParams} from "react-router-dom";
 import Routes from "../../routes";
 import {getOfferById} from "../../services/offers";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
-import {formatDateToHuman, formatDateToMachine, toCapitalize} from "../../utils";
+import {toCapitalize} from "../../utils";
 import COMMENTS from "../../mocks/comments";
 import CreateCommentForm from "../create-comment-form";
 import Map from "../map";
@@ -25,7 +25,7 @@ const getNearbyOffers = (offers: Offer[], id: number) => {
 const OfferPage = ({offers}: OfferPageProps): ReactElement => {
   const {id} = useParams<OfferPageParams>();
   const [offer, setOffer] = useState<Offer>(null);
-  const [nearbyOffers, _] = useState<Offer[]>(getNearbyOffers(offers, Number(id)));
+  const [nearbyOffers] = useState<Offer[]>(getNearbyOffers(offers, Number(id)));
 
   useEffect(() => {
     setOffer(getOfferById(Number(id)));
