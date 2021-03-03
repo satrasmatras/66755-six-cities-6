@@ -119,7 +119,10 @@ const MainPage = ({offers}: MainPageProps): ReactElement => {
                 <OffersList offers={offers} />
               </section>
               <div className="cities__right-section">
-                <Map offers={offers}/>
+                <Map
+                  offers={offers}
+                  className={`cities__map map`}
+                />
               </div>
             </div>
           </div>

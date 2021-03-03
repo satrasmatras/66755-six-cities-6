@@ -6,7 +6,7 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'public'),
     open: false,
     port: 1337,
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -39,7 +39,8 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public')
+    path: path.resolve(__dirname, 'public'),
+    publicPath: '/',
   },
   devtool: 'source-map',
 };

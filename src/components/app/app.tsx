@@ -27,7 +27,7 @@ const App = ({offers}: AppProps): ReactElement => {
           <FavoritesPage offers={offers}/>
         </Route>
         <Route path={Routes.OFFER} exact>
-          <OfferPage />
+          <OfferPage offers={offers}/>
         </Route>
         <Route>
           <NotFoundPage />

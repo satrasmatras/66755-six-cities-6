@@ -6,14 +6,24 @@ import Offer, {calculateRatingBarWidth} from "../../models/offer";
 import {formatDateToHuman, formatDateToMachine, toCapitalize} from "../../utils";
 import COMMENTS from "../../mocks/comments";
 import CreateCommentForm from "../create-comment-form";
+import Map from "../map";
 
 interface OfferPageParams {
   id: string
 }
 
-const OfferPage = (): ReactElement => {
+interface OfferPageProps {
+  offers: Offer[],
+}
+
+const getNearbyOffers = (offers: Offer[], id: number) => {
+  return offers.filter((o) => o.id !== id).slice(0, 3);
+};
+
+const OfferPage = ({offers}: OfferPageProps): ReactElement => {
   const {id} = useParams<OfferPageParams>();
   const [offer, setOffer] = useState<Offer>(null);
+  const [nearbyOffers, _] = useState<Offer[]>(getNearbyOffers(offers, Number(id)));
 
   useEffect(() => {
     setOffer(getOfferById(Number(id)));
@@ -187,7 +197,11 @@ const OfferPage = (): ReactElement => {
                 </section>
               </div>
             </div>
-            <section className="property__map map"/>
+            <Map
+              offers={nearbyOffers}
+              className={`property__map map`}
+              mainMarker={[offer.location.latitude, offer.location.longitude]}
+            />
           </section>
           <div className="container">
             <section className="near-places places">

@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef} from 'react';
+import React, {ReactElement, useEffect, useRef, useState} from 'react';
 import L, {LatLngTuple, MapOptions} from 'leaflet';
 import Offer from "../../models/offer";
 
@@ -6,6 +6,11 @@ import 'leaflet/dist/leaflet.css';
 
 const icon = L.icon({
   iconUrl: `img/pin.svg`,
+  iconSize: [30, 30]
+});
+
+const mainIcon = L.icon({
+  iconUrl: `img/pin-active.svg`,
   iconSize: [30, 30]
 });
 
@@ -19,36 +24,60 @@ const MAP_OPTIONS: MapOptions = {
 } as MapOptions;
 
 interface MapProps {
-  offers: Offer[];
+  offers: Offer[],
+  className: string,
+  mainMarker?: LatLngTuple,
 }
 
-const Map = ({offers}: MapProps): ReactElement => {
-  const mapRef: React.MutableRefObject<L.Map | undefined> = useRef();
+const Map = ({offers, className, mainMarker = null}: MapProps): ReactElement => {
+  const mapRef = useRef();
+  const [map, setMap] = useState<L.Map>(null);
 
   useEffect(() => {
-    mapRef.current = L.map(`map`, MAP_OPTIONS);
+    setMap(L.map(mapRef.current, MAP_OPTIONS));
 
-    L
-      .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
-        attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
-      })
-      .addTo(mapRef.current);
-
-    mapRef.current.setView(CITY_COORDS, ZOOM);
+    return () => {
+      if (map) {
+        map.remove();
+        setMap(null);
+      }
+    };
   }, []);
 
   useEffect(() => {
-    offers.forEach((offer) => {
-      const coords: LatLngTuple = [offer.location.latitude, offer.location.longitude];
+    if (map) {
       L
-        .marker(coords, {icon})
-        .addTo(mapRef.current);
-    });
+        .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
+          attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
+        })
+        .addTo(map);
 
-  }, [offers]);
+      map.setView(CITY_COORDS, ZOOM);
+    }
+  }, [map]);
+
+  useEffect(() => {
+    if (map && mainMarker) {
+      L
+        .marker(mainMarker, {icon: mainIcon})
+        .addTo(map);
+      map.setView(mainMarker, ZOOM);
+    }
+  }, [mainMarker, map]);
+
+  useEffect(() => {
+    if (map) {
+      offers.forEach((offer) => {
+        const coords: LatLngTuple = [offer.location.latitude, offer.location.longitude];
+        L
+          .marker(coords, {icon})
+          .addTo(map);
+      });
+    }
+  }, [offers, map]);
 
   return (
-    <section className="cities__map map" id="map" />
+    <section className={className} ref={mapRef} />
   );
 };
 
