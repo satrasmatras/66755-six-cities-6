@@ -1,6 +1,7 @@
 enum OfferCardTypes {
   CITY = `city`,
-  FAVORITE = `favorite`
+  FAVORITE = `favorite`,
+  NEAR = `near`,
 }
 
 export default OfferCardTypes;

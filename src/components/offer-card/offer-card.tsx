@@ -42,6 +42,12 @@ const OfferCard = ({cardType, offer, handleHover = null}: OfferCardProps): React
       previewImageHeight = 110;
       break;
     }
+    case OfferCardTypes.NEAR:
+    {
+      articleClass = `near-places__card`;
+      imageWrapperClass = `near-places__image-wrapper`;
+      break;
+    }
     default: {
       articleClass = `cities__place-card`;
       imageWrapperClass = `cities__image-wrapper`;
