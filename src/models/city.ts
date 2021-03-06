@@ -1,4 +1,5 @@
 enum City {
+  PARIS = `Paris`,
   COLOGNE = `Cologne`,
   BRUSSELS = `Brussels`,
   AMSTERDAM = `Amsterdam`,

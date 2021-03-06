@@ -8,6 +8,8 @@ const rootReducer = combineReducers({
   offers: offersReducer
 });
 
+export type RootState = ReturnType<typeof rootReducer>
+
 export const store = createStore(
     rootReducer,
     composeWithDevTools()
