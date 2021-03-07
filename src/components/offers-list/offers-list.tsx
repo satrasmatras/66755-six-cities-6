@@ -1,15 +1,17 @@
-import React, {ReactElement, useState} from "react";
+import React, {Dispatch, ReactElement} from "react";
 import PropTypes from "prop-types";
 import Offer from "../../models/offer";
 import OfferCard from "../offer-card";
 import OfferCardTypes from "../../models/offer-card-types";
+import {connect} from "react-redux";
+import {updateHoveredOffer} from "../../store/map/actions";
 
 interface OffersListProps {
   offers: Offer[],
+  updateHoveredOffer: Dispatch<any>
 }
 
-const OffersList = ({offers}: OffersListProps): ReactElement => {
-  const [, setActiveOffer] = useState(undefined);
+const OffersList = ({offers, updateHoveredOffer}: OffersListProps): ReactElement => {
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -20,7 +22,7 @@ const OffersList = ({offers}: OffersListProps): ReactElement => {
               cardType={OfferCardTypes.CITY}
               key={i}
               offer={offer}
-              handleHover={setActiveOffer}
+              handleHover={updateHoveredOffer}
             />
           );
         })
@@ -33,4 +35,8 @@ OffersList.propTypes = {
   offers: PropTypes.array,
 };
 
-export default OffersList;
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  updateHoveredOffer: (offer: Offer) => dispatch(updateHoveredOffer(offer))
+});
+
+export default connect(null, mapDispatchToProps)(OffersList);

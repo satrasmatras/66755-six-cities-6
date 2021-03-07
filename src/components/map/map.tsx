@@ -1,8 +1,9 @@
 import React, {ReactElement, useEffect, useRef, useState} from 'react';
-import L, {LatLngTuple, MapOptions} from 'leaflet';
+import L, {LatLngTuple, MapOptions, Marker} from 'leaflet';
 import Offer from "../../models/offer";
 
 import 'leaflet/dist/leaflet.css';
+import City from "../../models/city";
 
 const icon = L.icon({
   iconUrl: `img/pin.svg`,
@@ -25,11 +26,12 @@ const MAP_OPTIONS: MapOptions = {
 
 interface MapProps {
   offers: Offer[],
+  city: City,
   className: string,
-  mainMarker?: LatLngTuple,
+  mainOffer?: Offer,
 }
 
-const Map = ({offers, className, mainMarker = null}: MapProps): ReactElement => {
+const Map = ({offers, city, className, mainOffer = null}: MapProps): ReactElement => {
   const mapRef = useRef();
   const [map, setMap] = useState<L.Map>(null);
 
@@ -57,23 +59,40 @@ const Map = ({offers, className, mainMarker = null}: MapProps): ReactElement => 
   }, [map]);
 
   useEffect(() => {
-    if (map && mainMarker) {
-      L
-        .marker(mainMarker, {icon: mainIcon})
-        .addTo(map);
-      map.setView(mainMarker, ZOOM);
+    if (map && mainOffer) {
+      const {latitude, longitude} = mainOffer.location;
+      const marker: Marker = L.marker([latitude, longitude], {icon: mainIcon});
+      marker.addTo(map);
     }
-  }, [mainMarker, map]);
+  }, [mainOffer, map]);
 
   useEffect(() => {
     if (map) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+    }
+  }, [city, map]);
+
+  useEffect(() => {
+    const markers: Marker[] = [];
+
+    if (map) {
       offers.forEach((offer) => {
-        const coords: LatLngTuple = [offer.location.latitude, offer.location.longitude];
-        L
-          .marker(coords, {icon})
-          .addTo(map);
+        if (offer !== mainOffer) {
+          const coords: LatLngTuple = [offer.location.latitude, offer.location.longitude];
+          const marker = L.marker(coords, {icon});
+          markers.push(marker);
+          marker.addTo(map);
+        }
       });
     }
+
+    return () => {
+      if (map) {
+        markers.forEach((marker: Marker) => {
+          marker.remove();
+        });
+      }
+    };
   }, [offers, map]);
 
   return (

@@ -4,12 +4,17 @@ import Offer from "../../models/offer";
 import OffersList from "../offers-list";
 import Map from "../map";
 import CitiesList from "../cities-list";
+import {RootState} from "../../store";
+import {connect} from "react-redux";
+import City from "../../models/city";
 
 interface MainPageProps {
   offers: Offer[],
+  city: City,
+  hoveredOffer?: Offer
 }
 
-const MainPage = ({offers}: MainPageProps): ReactElement => {
+const MainPage = ({offers, city, hoveredOffer}: MainPageProps): ReactElement => {
   return (
     <>
       <div style={{display: `none`}}>
@@ -70,7 +75,7 @@ const MainPage = ({offers}: MainPageProps): ReactElement => {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">312 places to stay in Amsterdam</b>
+                <b className="places__found">{offers.length} places to stay in {city.name}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
@@ -90,8 +95,10 @@ const MainPage = ({offers}: MainPageProps): ReactElement => {
               </section>
               <div className="cities__right-section">
                 <Map
+                  city={city}
                   offers={offers}
                   className={`cities__map map`}
+                  mainOffer={hoveredOffer}
                 />
               </div>
             </div>
@@ -106,4 +113,14 @@ MainPage.propTypes = {
   offers: PropTypes.array
 };
 
-export default MainPage;
+const mapStateToProps = ({offers, city, map}: RootState) => {
+  return {
+    offers: offers.offers.filter((offer) => {
+      return offer.city.name === city.city.name;
+    }),
+    city: city.city,
+    hoveredOffer: map.hoveredOffer
+  };
+};
+
+export default connect(mapStateToProps, null)(MainPage);

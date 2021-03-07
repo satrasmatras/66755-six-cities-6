@@ -1,7 +1,8 @@
 import {OffersActionTypes, OffersState, UPDATE_OFFERS} from "./types";
+import OFFERS from "../../mocks/offers";
 
 const initialState: OffersState = {
-  offers: []
+  offers: OFFERS
 };
 
 export const offersReducer = (state = initialState, action: OffersActionTypes): OffersState => {

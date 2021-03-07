@@ -171,7 +171,8 @@ const OfferPage = ({offers}: OfferPageProps): ReactElement => {
             <Map
               offers={nearbyOffers}
               className={`property__map map`}
-              mainMarker={[offer.location.latitude, offer.location.longitude]}
+              city={offer.city}
+              mainOffer={offer}
             />
           </section>
           <div className="container">

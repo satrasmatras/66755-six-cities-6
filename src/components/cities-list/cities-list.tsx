@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {RootState} from "../../store";
 import {changeCity} from "../../store/city/actions";
 import {Dispatch} from "redux";
+import {CITIES} from "../../mocks/cities";
 
 interface CitiesListProps {
   activeCity: City,
@@ -15,18 +16,17 @@ const CitiesList = (props: CitiesListProps): ReactElement => {
   return (
     <ul className="locations__list tabs__list">
       {
-        Object
-        .values(City)
-        .map((city) => {
+        CITIES
+        .map((city: City) => {
           const activeClass = activeCity === city ? `tabs__item--active` : ``;
           return (
-            <li className="locations__item" key={`city-${city}`}>
+            <li className="locations__item" key={`city-${city.name}`}>
               <a
                 className={`locations__item-link tabs__item ${activeClass}`}
                 href="#"
                 onClick={() => handleCityChange(city)}
               >
-                <span>{city}</span>
+                <span>{city.name}</span>
               </a>
             </li>
           );

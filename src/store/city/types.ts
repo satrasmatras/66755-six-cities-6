@@ -8,7 +8,7 @@ export interface ChangeCityAction {
 }
 
 export interface CityState {
-  city: City
+  city: City,
 }
 
 export type CityActionTypes = ChangeCityAction;

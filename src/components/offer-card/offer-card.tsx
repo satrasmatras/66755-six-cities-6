@@ -9,7 +9,7 @@ import {getOfferRoute} from "../../routes";
 interface OfferCardProps {
   cardType: OfferCardTypes,
   offer: Offer,
-  handleHover?: Dispatch<Offer>
+  handleHover?: Dispatch<any>
 }
 
 const OfferCard = ({cardType, offer, handleHover = null}: OfferCardProps): ReactElement => {
