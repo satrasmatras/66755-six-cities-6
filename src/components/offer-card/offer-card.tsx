@@ -1,4 +1,4 @@
-import React, {Dispatch, ReactElement} from 'react';
+import React, {Dispatch, ReactElement, SyntheticEvent} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
@@ -57,13 +57,13 @@ const OfferCard = ({cardType, offer, handleHover = null}: OfferCardProps): React
     }
   }
 
-  const handleMouseEnter = () => {
+  const handleMouseMove = (event: SyntheticEvent) => {
     if (handleHover) {
       handleHover(offer);
     }
   };
 
-  const handleMouseOut = () => {
+  const handleMouseLeave = (event: SyntheticEvent) => {
     if (handleHover) {
       handleHover(null);
     }
@@ -72,8 +72,8 @@ const OfferCard = ({cardType, offer, handleHover = null}: OfferCardProps): React
   return (
     <article
       className={`${articleClass} place-card`}
-      onMouseEnter={handleMouseEnter}
-      onMouseOut={handleMouseOut}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       {
         isPremium && <div className="place-card__mark">
