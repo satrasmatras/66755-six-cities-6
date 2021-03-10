@@ -1,5 +1,5 @@
 import React, {ReactElement, useEffect, useRef, useState} from 'react';
-import L, {LatLngTuple, MapOptions, Marker} from 'leaflet';
+import L, {Circle, LatLngTuple, MapOptions, Marker} from 'leaflet';
 import Offer from "../../models/offer";
 
 import 'leaflet/dist/leaflet.css';
@@ -59,15 +59,19 @@ const Map = ({offers, city, className, mainOffer = null}: MapProps): ReactElemen
   }, [map]);
 
   useEffect(() => {
+    let marker: Marker;
+
     if (map && mainOffer) {
       const {latitude, longitude} = mainOffer.location;
-      const marker: Marker = L.marker([latitude, longitude], {icon: mainIcon});
+      marker = L.marker([latitude, longitude], {icon: mainIcon});
       marker.addTo(map);
-
-      return () => {
-        marker.removeFrom(map);
-      };
     }
+
+    return () => {
+      if (map && marker) {
+        marker.remove();
+      }
+    };
   }, [mainOffer, map]);
 
   useEffect(() => {
