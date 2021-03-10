@@ -63,6 +63,10 @@ const Map = ({offers, city, className, mainOffer = null}: MapProps): ReactElemen
       const {latitude, longitude} = mainOffer.location;
       const marker: Marker = L.marker([latitude, longitude], {icon: mainIcon});
       marker.addTo(map);
+
+      return () => {
+        marker.removeFrom(map);
+      };
     }
   }, [mainOffer, map]);
 
