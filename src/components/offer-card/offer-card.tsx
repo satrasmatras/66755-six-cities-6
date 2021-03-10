@@ -57,13 +57,13 @@ const OfferCard = ({cardType, offer, handleHover = null}: OfferCardProps): React
     }
   }
 
-  const handleMouseMove = (event: SyntheticEvent) => {
+  const handleMouseMove = () => {
     if (handleHover) {
       handleHover(offer);
     }
   };
 
-  const handleMouseLeave = (event: SyntheticEvent) => {
+  const handleMouseLeave = () => {
     if (handleHover) {
       handleHover(null);
     }
