@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Offer from "../../models/offer";
 import OffersList from "../offers-list";
@@ -9,14 +9,23 @@ import {connect} from "react-redux";
 import City from "../../models/city";
 import SortList from "../sort-list";
 import {getOffersByCity, sortOffersBySortType} from "../../selectors/offers";
+import {fetchOffers} from "../../store/offers/api-actions";
+import Loader from "../loader";
 
 interface MainPageProps {
   offers: Offer[],
   city: City,
-  hoveredOffer?: Offer
+  hoveredOffer?: Offer,
+  onLoadOffers: any
+  isLoading: boolean,
 }
 
-const MainPage = ({offers, city, hoveredOffer}: MainPageProps): ReactElement => {
+const MainPage = ({offers, city, hoveredOffer, onLoadOffers, isLoading}: MainPageProps): ReactElement => {
+
+  useEffect(() => {
+    onLoadOffers();
+  }, []);
+
   return (
     <>
       <div style={{display: `none`}}>
@@ -68,29 +77,37 @@ const MainPage = ({offers, city, hoveredOffer}: MainPageProps): ReactElement => 
 
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
-          <div className="tabs">
-            <section className="locations container">
-              <CitiesList />
-            </section>
-          </div>
-          <div className="cities">
-            <div className="cities__places-container container">
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in {city.name}</b>
-                <SortList />
-                <OffersList offers={offers} />
-              </section>
-              <div className="cities__right-section">
-                <Map
-                  city={city}
-                  offers={offers}
-                  className={`cities__map map`}
-                  mainOffer={hoveredOffer}
-                />
+          {
+            isLoading && <Loader />
+          }
+          {
+            !isLoading
+            && <>
+              <div className="tabs">
+                <section className="locations container">
+                  <CitiesList/>
+                </section>
               </div>
-            </div>
-          </div>
+              <div className="cities">
+                <div className="cities__places-container container">
+                  <section className="cities__places places">
+                    <h2 className="visually-hidden">Places</h2>
+                    <b className="places__found">{offers.length} places to stay in {city.name}</b>
+                    <SortList />
+                    <OffersList offers={offers} />
+                  </section>
+                  <div className="cities__right-section">
+                    <Map
+                      city={city}
+                      offers={offers}
+                      className={`cities__map map`}
+                      mainOffer={hoveredOffer}
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          }
         </main>
       </div>
     </>
@@ -107,8 +124,15 @@ const mapStateToProps = ({offers, city, map}: RootState) => {
   return {
     offers: sortOffersBySortType(offersCopy, offers.sortType),
     city: city.city,
-    hoveredOffer: map.hoveredOffer
+    hoveredOffer: map.hoveredOffer,
+    isLoading: offers.isLoading
   };
 };
 
-export default connect(mapStateToProps, null)(MainPage);
+const mapDispatchToProps = (dispatch: any) => ({
+  onLoadOffers() {
+    dispatch(fetchOffers());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

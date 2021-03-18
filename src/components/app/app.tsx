@@ -7,27 +7,23 @@ import Login from "../login";
 import FavoritesPage from "../favorites-page";
 import OfferPage from "../offer-page";
 import NotFoundPage from "../not-found-page";
-import Offer from "../../models/offer";
 
-interface AppProps {
-  offers: Offer[],
-}
+const App = (): ReactElement => {
 
-const App = ({offers}: AppProps): ReactElement => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={Routes.MAIN} exact>
-          <MainPage offers={offers} />
+          <MainPage />
         </Route>
         <Route path={Routes.LOGIN} exact>
           <Login />
         </Route>
         <Route path={Routes.FAVORITES} exact>
-          <FavoritesPage offers={offers}/>
+          <FavoritesPage />
         </Route>
         <Route path={Routes.OFFER} exact>
-          <OfferPage offers={offers}/>
+          <OfferPage />
         </Route>
         <Route>
           <NotFoundPage />

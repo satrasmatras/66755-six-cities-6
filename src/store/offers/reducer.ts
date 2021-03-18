@@ -1,10 +1,10 @@
-import {OffersActionTypes, OffersState, SET_SORT_TYPE, UPDATE_OFFERS} from "./types";
-import OFFERS from "../../mocks/offers";
+import {OffersActionTypes, OffersState, SET_LOADING, SET_SORT_TYPE, UPDATE_OFFERS} from "./types";
 import SortType from "../../models/sort-type";
 
 const initialState: OffersState = {
-  offers: OFFERS,
-  sortType: SortType.POPULAR
+  offers: [],
+  sortType: SortType.POPULAR,
+  isLoading: false,
 };
 
 export const offersReducer = (state = initialState, action: OffersActionTypes): OffersState => {
@@ -18,6 +18,11 @@ export const offersReducer = (state = initialState, action: OffersActionTypes): 
       return {
         ...state,
         sortType: action.payload
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
       };
     default:
       return state;

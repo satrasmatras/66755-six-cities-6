@@ -5,10 +5,10 @@ import Offer from "../../models/offer";
 import FavoritesList from "../favorites-list";
 
 interface FavoritesPageProps {
-  offers: Offer[],
+  offers?: Offer[],
 }
 
-const FavoritesPage = ({offers}: FavoritesPageProps): ReactElement => {
+const FavoritesPage = ({offers = []}: FavoritesPageProps): ReactElement => {
 
   return (
     <>

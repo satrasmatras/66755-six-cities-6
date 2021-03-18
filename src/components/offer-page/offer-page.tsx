@@ -15,14 +15,14 @@ interface OfferPageParams {
 }
 
 interface OfferPageProps {
-  offers: Offer[],
+  offers?: Offer[],
 }
 
 const getNearbyOffers = (offers: Offer[], id: number) => {
   return offers.filter((o) => o.id !== id).slice(0, 3);
 };
 
-const OfferPage = ({offers}: OfferPageProps): ReactElement => {
+const OfferPage = ({offers = []}: OfferPageProps): ReactElement => {
   const {id} = useParams<OfferPageParams>();
   const [offer, setOffer] = useState<Offer>(null);
   const [nearbyOffers] = useState<Offer[]>(getNearbyOffers(offers, Number(id)));
