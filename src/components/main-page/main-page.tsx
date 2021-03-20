@@ -11,6 +11,9 @@ import SortList from "../sort-list";
 import {getOffersByCity, sortOffersBySortType} from "../../selectors/offers";
 import {fetchOffers} from "../../store/offers/api-actions";
 import Loader from "../loader";
+import {AuthorizationStatus} from "../../store/user/types";
+import {Link} from "react-router-dom";
+import Routes from "../../routes";
 
 interface MainPageProps {
   offers: Offer[],
@@ -18,9 +21,10 @@ interface MainPageProps {
   hoveredOffer?: Offer,
   onLoadOffers: any
   isLoading: boolean,
+  authorizationStatus: AuthorizationStatus,
 }
 
-const MainPage = ({offers, city, hoveredOffer, onLoadOffers, isLoading}: MainPageProps): ReactElement => {
+const MainPage = ({offers, city, hoveredOffer, onLoadOffers, isLoading, authorizationStatus}: MainPageProps): ReactElement => {
 
   useEffect(() => {
     onLoadOffers();
@@ -63,11 +67,22 @@ const MainPage = ({offers, city, hoveredOffer, onLoadOffers, isLoading}: MainPag
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="#">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    </a>
+                    {
+                      authorizationStatus === AuthorizationStatus.AUTH &&
+                      <a className="header__nav-link header__nav-link--profile" href="#">
+                        <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                      </a>
+                    }
+                    {
+                      authorizationStatus !== AuthorizationStatus.AUTH &&
+                      <Link
+                        className="header__nav-link header__nav-link--profile"
+                        to={Routes.LOGIN}
+                      >
+                        Sign in
+                      </Link>
+                    }
                   </li>
                 </ul>
               </nav>
@@ -118,16 +133,18 @@ MainPage.propTypes = {
   offers: PropTypes.array
 };
 
-const mapStateToProps = ({offers, city, map}: RootState) => {
+const mapStateToProps = ({offers, city, map, user}: RootState) => {
   const offersCopy = getOffersByCity(offers.offers, city.city.name);
 
   return {
     offers: sortOffersBySortType(offersCopy, offers.sortType),
     city: city.city,
     hoveredOffer: map.hoveredOffer,
-    isLoading: offers.isLoading
+    isLoading: offers.isLoading,
+    authorizationStatus: user.authorizationStatus
   };
 };
+
 
 const mapDispatchToProps = (dispatch: any) => ({
   onLoadOffers() {
