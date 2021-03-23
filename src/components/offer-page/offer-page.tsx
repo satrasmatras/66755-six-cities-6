@@ -1,14 +1,19 @@
 import React, {ReactElement, useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import Routes from "../../routes";
-import {getOfferById} from "../../services/offers";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
 import {toCapitalize} from "../../utils";
-import COMMENTS from "../../mocks/comments";
 import CreateCommentForm from "../create-comment-form";
 import Map from "../map";
 import ReviewsList from "../reviews-list";
 import NearPlacesList from "../near-places-list";
+import {RootState} from "../../store";
+import {connect} from "react-redux";
+import {ThunkDispatch} from "redux-thunk";
+import {loadOfferById, loadOfferComments} from "../../store/offer/offerSlice";
+import Loader from "../loader";
+import Comment from "../../models/comment";
+import {AuthorizationStatus} from "../../store/user/types";
 
 interface OfferPageParams {
   id: string
@@ -16,23 +21,41 @@ interface OfferPageParams {
 
 interface OfferPageProps {
   offers?: Offer[],
+  offer: Offer,
+  offerIsLoading: boolean,
+  comments: Comment[],
+  commentsAreLoading: boolean,
+  onLoadOffer: (id: number) => void,
+  onLoadComments: (id: number) => void,
+  isAuthorized: boolean,
 }
 
 const getNearbyOffers = (offers: Offer[], id: number) => {
   return offers.filter((o) => o.id !== id).slice(0, 3);
 };
 
-const OfferPage = ({offers = []}: OfferPageProps): ReactElement => {
+const OfferPage = (props: OfferPageProps): ReactElement => {
+  const {
+    offers,
+    offer,
+    offerIsLoading,
+    comments,
+    commentsAreLoading,
+    onLoadOffer,
+    onLoadComments,
+    isAuthorized
+  } = props;
+
   const {id} = useParams<OfferPageParams>();
-  const [offer, setOffer] = useState<Offer>(null);
-  const [nearbyOffers] = useState<Offer[]>(getNearbyOffers(offers, Number(id)));
+  const [nearbyOffers] = useState<Offer[]>([]);
 
   useEffect(() => {
-    setOffer(getOfferById(Number(id)));
+    onLoadOffer(Number(id));
+    onLoadComments(Number(id));
   }, [id]);
 
-  if (!offer) {
-    return (<div></div>);
+  if (offerIsLoading || !offer) {
+    return (<Loader />);
   }
 
   return (
@@ -82,7 +105,7 @@ const OfferPage = ({offers = []}: OfferPageProps): ReactElement => {
             <div className="property__gallery-container container">
               <div className="property__gallery">
                 {
-                  offer.images.map((image, i) => {
+                  offer?.images.map((image, i) => {
                     return (
                       <div className="property__image-wrapper" key={`image${i}`}>
                         <img className="property__image" src={image} alt="Photo studio"/>
@@ -95,7 +118,7 @@ const OfferPage = ({offers = []}: OfferPageProps): ReactElement => {
             <div className="property__container container">
               <div className="property__wrapper">
                 {
-                  offer.isPremium && <div className="property__mark">
+                  offer?.isPremium && <div className="property__mark">
                     <span>Premium</span>
                   </div>
                 }
@@ -104,7 +127,7 @@ const OfferPage = ({offers = []}: OfferPageProps): ReactElement => {
                   <h1 className="property__name">
                     {offer.title}
                   </h1>
-                  <button className={`property__bookmark-button ${offer.isFavorite ? `property__bookmark-button--active` : ``} button`} type="button">
+                  <button className={`property__bookmark-button ${offer?.isFavorite ? `property__bookmark-button--active` : ``} button`} type="button">
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>
@@ -163,8 +186,19 @@ const OfferPage = ({offers = []}: OfferPageProps): ReactElement => {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <ReviewsList comments={COMMENTS} />
-                  <CreateCommentForm />
+                  {
+                    commentsAreLoading && <Loader />
+                  }
+                  {
+                    !commentsAreLoading && <ReviewsList comments={comments} />
+                  }
+
+                  {
+                    isAuthorized && <CreateCommentForm offerId={offer.id}/>
+                  }
+                  {
+                    !isAuthorized && <p>You need to login, if you want to leave comment about offer.</p>
+                  }
                 </section>
               </div>
             </div>
@@ -187,4 +221,17 @@ const OfferPage = ({offers = []}: OfferPageProps): ReactElement => {
   );
 };
 
-export default OfferPage;
+const mapStateToProps = ({offer, user}: RootState) => ({
+  offer: offer.offer,
+  offerIsLoading: offer.offerIsLoading,
+  comments: offer.comments,
+  commentsAreLoading: offer.commentsAreLoading,
+  isAuthorized: user.authorizationStatus === AuthorizationStatus.AUTH
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, any>) => ({
+  onLoadOffer: (id: number) => dispatch(loadOfferById(id)),
+  onLoadComments: (id: number) => dispatch(loadOfferComments(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);

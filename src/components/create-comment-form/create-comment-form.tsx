@@ -1,4 +1,8 @@
-import React, {ReactElement, Fragment, SyntheticEvent, useState} from 'react';
+import React, {ReactElement, Fragment, SyntheticEvent, useState, useRef} from 'react';
+import {CommentPost} from "../../models/comment-post";
+import {postComment} from "../../store/offer/offerSlice";
+import {ThunkDispatch} from "redux-thunk";
+import {connect} from "react-redux";
 
 interface RatingItem {
   title: string,
@@ -28,15 +32,21 @@ const RATING_ITEMS: RatingItem[] = [
   },
 ];
 
-const INITIAL_DATA = {
+const INITIAL_DATA: CommentPost = {
   rating: 5,
-  review: ``
+  comment: ``
 };
 
 const MIN_REVIEW_LENGTH = 50;
 
-const CreateCommentForm = (): ReactElement => {
-  const [data, setData] = useState(INITIAL_DATA);
+interface CreateCommentFormProps {
+  offerId: number,
+  onCreateComment: (data: CommentPost, id: number) => void,
+}
+
+const CreateCommentForm = ({ offerId, onCreateComment }: CreateCommentFormProps): ReactElement => {
+  const [data, setData] = useState<CommentPost>(INITIAL_DATA);
+  const formRef = useRef(null);
 
   const handleChange = (event: SyntheticEvent) => {
     const {name, value} = event.target as HTMLInputElement;
@@ -45,6 +55,8 @@ const CreateCommentForm = (): ReactElement => {
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
+    onCreateComment(data, offerId);
+    formRef.current.reset();
   };
 
   return (
@@ -54,6 +66,7 @@ const CreateCommentForm = (): ReactElement => {
       method="post"
       onChange={handleChange}
       onSubmit={handleSubmit}
+      ref={formRef}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -85,8 +98,12 @@ const CreateCommentForm = (): ReactElement => {
           })
         }
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review"
-        placeholder="Tell how was your stay, what you like and what can be improved"/>
+      <textarea
+        className="reviews__textarea form__textarea"
+        id="review"
+        name="comment"
+        placeholder="Tell how was your stay, what you like and what can be improved"
+      />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
@@ -95,7 +112,7 @@ const CreateCommentForm = (): ReactElement => {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={data.review.length < MIN_REVIEW_LENGTH}
+          disabled={data.comment.length < MIN_REVIEW_LENGTH}
         >
           Submit
         </button>
@@ -104,4 +121,8 @@ const CreateCommentForm = (): ReactElement => {
   );
 };
 
-export default CreateCommentForm;
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, any>) => ({
+  onCreateComment: (data: CommentPost, id: number) => dispatch(postComment(data, id)),
+});
+
+export default connect(null, mapDispatchToProps)(CreateCommentForm);

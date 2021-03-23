@@ -2,6 +2,7 @@ import cityReducer from './city';
 import offersReducer from './offers';
 import mapReducer from "./map";
 import userReducer from "./user";
+import offerReducer from './offer';
 import {combineReducers, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
 import {applyMiddleware} from "redux";
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   city: cityReducer,
   offers: offersReducer,
   map: mapReducer,
-  user: userReducer
+  user: userReducer,
+  offer: offerReducer,
 });
 
 const api = createAPI(
