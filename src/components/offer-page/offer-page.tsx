@@ -10,10 +10,10 @@ import NearPlacesList from "../near-places-list";
 import {RootState} from "../../store";
 import {connect} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
-import {loadOfferById, loadOfferComments} from "../../store/offer/offerSlice";
+import {loadOfferById, loadOfferComments} from "../../store/offer/slice";
 import Loader from "../loader";
 import Comment from "../../models/comment";
-import {AuthorizationStatus} from "../../store/user/types";
+import {AuthorizationStatus} from "../../store/user/slice";
 
 interface OfferPageParams {
   id: string

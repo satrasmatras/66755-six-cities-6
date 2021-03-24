@@ -1,6 +1,6 @@
 import React from "react";
 import {Redirect, Route} from "react-router";
-import {AuthorizationStatus} from "../../store/user/types";
+import {AuthorizationStatus} from "../../store/user/slice";
 import Routes from "../../routes";
 import {connect} from "react-redux";
 import {RootState} from "../../store";

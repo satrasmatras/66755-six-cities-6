@@ -1,3 +1,3 @@
-import {mapReducer} from './reducer';
+import mapReducer from './slice';
 
 export default mapReducer;

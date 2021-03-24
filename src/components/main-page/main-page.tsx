@@ -9,9 +9,9 @@ import {connect} from "react-redux";
 import City from "../../models/city";
 import SortList from "../sort-list";
 import {getOffersByCity, sortOffersBySortType} from "../../selectors/offers";
-import {fetchOffers} from "../../store/offers/api-actions";
+import {fetchOffers} from "../../store/offers/slice";
 import Loader from "../loader";
-import {AuthorizationStatus} from "../../store/user/types";
+import {AuthorizationStatus} from "../../store/user/slice";
 import {Link} from "react-router-dom";
 import Routes from "../../routes";
 

@@ -1,3 +1,3 @@
-import {cityReducer} from './reducer';
+import cityReducer from './slice';
 
 export default cityReducer;

@@ -1,3 +1,3 @@
-import offerSlice from "./offerSlice";
+import offerReducer from "./slice";
 
-export default offerSlice;
+export default offerReducer;

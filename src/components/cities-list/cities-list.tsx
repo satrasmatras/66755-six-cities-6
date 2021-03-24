@@ -2,7 +2,7 @@ import React, {ReactElement} from 'react';
 import City from '../../models/city';
 import {connect} from "react-redux";
 import {RootState} from "../../store";
-import {changeCity} from "../../store/city/actions";
+import {changeCity} from "../../store/city/slice";
 import {Dispatch} from "redux";
 import {CITIES} from "../../mocks/cities";
 

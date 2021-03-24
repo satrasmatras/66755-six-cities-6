@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {RootState} from "../../store";
 import SortType from "../../models/sort-type";
 import {Dispatch} from "redux";
-import {setSortType} from "../../store/offers/actions";
+import {setSortType} from "../../store/offers/slice";
 
 const SortTypesMap = {
   [SortType.POPULAR]: `Popular`,

@@ -1,6 +1,6 @@
 import React, {ReactElement, Fragment, SyntheticEvent, useState, useRef} from 'react';
 import {CommentPost} from "../../models/comment-post";
-import {postComment} from "../../store/offer/offerSlice";
+import {postComment} from "../../store/offer/slice";
 import {ThunkDispatch} from "redux-thunk";
 import {connect} from "react-redux";
 

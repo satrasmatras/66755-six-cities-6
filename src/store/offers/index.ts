@@ -1,3 +1,3 @@
-import {offersReducer} from './reducer';
+import offersReducer from './slice';
 
 export default offersReducer;

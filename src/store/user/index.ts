@@ -1,3 +1,3 @@
-import {userReducer} from "./reducer";
+import userReducer from "./slice";
 
 export default userReducer;

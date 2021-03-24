@@ -2,7 +2,7 @@ import React, {ReactElement, SyntheticEvent, useState} from 'react';
 import {Link} from 'react-router-dom';
 import Routes from '../../routes';
 import {connect} from "react-redux";
-import {login, LoginPayload} from "../../store/user/api-actions";
+import {login, LoginPayload} from "../../store/user/slice";
 import {ThunkDispatch} from "redux-thunk";
 
 interface LoginProps {

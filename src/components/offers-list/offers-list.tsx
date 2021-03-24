@@ -4,7 +4,7 @@ import Offer from "../../models/offer";
 import OfferCard from "../offer-card";
 import OfferCardTypes from "../../models/offer-card-types";
 import {connect} from "react-redux";
-import {updateHoveredOffer} from "../../store/map/actions";
+import {updateHoveredOffer} from "../../store/map/slice";
 
 interface OffersListProps {
   offers: Offer[],
