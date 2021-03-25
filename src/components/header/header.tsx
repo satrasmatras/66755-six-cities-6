@@ -5,14 +5,14 @@ import React, {memo, FC, SyntheticEvent} from "react";
 import {RootState} from "../../store";
 import {useDispatch, useSelector} from "react-redux";
 
-const Header: FC= () => {
+const Header: FC = () => {
   const {authorizationStatus, authInfo: user} = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   const handleLogout = (event: SyntheticEvent) => {
     event.preventDefault();
     dispatch(logout());
-  }
+  };
 
   return (
     <header className="header">

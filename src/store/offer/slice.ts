@@ -8,7 +8,7 @@ import {adaptDataToComment} from "../../adapters/comments";
 import {CommentPost} from "../../models/comment-post";
 import {createSlice} from "@reduxjs/toolkit";
 import {HttpCode} from "../../services/api";
-import { redirectToRoute } from "../redirect/slice";
+import {redirectToRoute} from "../redirect/slice";
 import Routes from "../../routes";
 
 interface OfferState {
@@ -26,8 +26,8 @@ const initialState: OfferState = {
 };
 
 const slice = createSlice({
-  name: 'offer',
-  initialState: initialState,
+  name: `offer`,
+  initialState,
   reducers: {
     setOffer: (state, action) => {
       state.offer = action.payload;
@@ -45,7 +45,7 @@ const slice = createSlice({
       state.commentsAreLoading = action.payload;
     },
   }
-})
+});
 
 export const {
   setOffer,
@@ -63,7 +63,7 @@ export const loadOfferById = (id: number) => async (dispatch: Dispatch, _: RootS
   const offer = response.data;
   dispatch(setOffer(adaptDataToOffer(offer)));
   dispatch(setOfferIsLoading(false));
-}
+};
 
 const getCommentsRoute = (id: number) => `/comments/${id}`;
 
@@ -76,16 +76,16 @@ export const loadOfferComments = (id: number) => async (dispatch: Dispatch, _: R
       .map(adaptDataToComment);
   dispatch(setComments(comments));
   dispatch(setCommentsAreLoading(false));
-}
+};
 
 export const postComment = (commentPost: CommentPost, id: number) => async (dispatch: Dispatch, _: RootState, api: AxiosInstance) => {
   dispatch(setCommentsAreLoading(true));
   const response = await api.post(getCommentsRoute(id), commentPost);
-  const comments =     response
+  const comments = response
     .data
     .map(adaptDataToComment);
   dispatch(setComments(comments));
   dispatch(setCommentsAreLoading(false));
-}
+};
 
 export default slice.reducer;

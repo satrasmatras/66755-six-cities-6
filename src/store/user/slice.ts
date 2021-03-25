@@ -4,7 +4,7 @@ import {Action} from "redux";
 import {RootState} from "../index";
 import {AxiosInstance} from "axios";
 import Routes from "../../routes";
-import { redirectToRoute } from "../redirect/slice";
+import {redirectToRoute} from "../redirect/slice";
 import AuthInfo from "../../models/auth-info";
 import {adaptDataToAuthInfo} from "../../adapters/auth-info";
 
@@ -26,7 +26,7 @@ const initialState: UserState = {
 
 const userSlice = createSlice({
   name: `user`,
-  initialState: initialState,
+  initialState,
   reducers: {
     setAuthorizationStatus: (state, action) => {
       state.authorizationStatus = action.payload;
@@ -59,7 +59,7 @@ export interface LoginPayload {
 }
 
 export const login = (
-  {email, password}: LoginPayload
+    {email, password}: LoginPayload
 ) => async (next: ThunkDispatch<undefined, undefined, Action>, _: RootState, api: AxiosInstance): Promise<void> => {
   const response = await api.post(ApiRoutes.LOGIN, {
     email,

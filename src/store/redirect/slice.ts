@@ -6,7 +6,7 @@ const redirectSlice = createSlice({
   name: `redirect`,
   initialState: {},
   reducers: {
-    redirectToRoute: (state, action) => {},
+    redirectToRoute: (state, action) => null,
   }
 });
 

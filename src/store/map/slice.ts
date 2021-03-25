@@ -11,13 +11,13 @@ const initialState: MapState = {
 
 const mapSlice = createSlice({
   name: `map`,
-  initialState: initialState,
+  initialState,
   reducers: {
     updateHoveredOffer: (state, action) => {
       state.hoveredOffer = action.payload;
     }
   }
-})
+});
 
 export const {
   updateHoveredOffer

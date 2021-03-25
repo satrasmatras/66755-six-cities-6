@@ -8,11 +8,11 @@ const selectSortType = (state: RootState) => state.offers.sortType;
 const selectCity = (state: RootState) => state.city.city;
 
 export const selectOffersByCity = createSelector(
-  [selectAllOffers, selectCity],
-  (offers, city) => offers.filter((offer: Offer) => offer.city.name === city.name)
-)
+    [selectAllOffers, selectCity],
+    (offers, city) => offers.filter((offer: Offer) => offer.city.name === city.name)
+);
 
 export const selectSortedOffers = createSelector(
-  [selectOffersByCity, selectSortType],
-  sortOffersBySortType
-)
+    [selectOffersByCity, selectSortType],
+    sortOffersBySortType
+);

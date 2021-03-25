@@ -42,7 +42,7 @@ interface CreateCommentFormProps {
   offerId: number,
 }
 
-const CreateCommentForm = ({ offerId }: CreateCommentFormProps): ReactElement => {
+const CreateCommentForm = ({offerId}: CreateCommentFormProps): ReactElement => {
   const [data, setData] = useState<CommentPost>(INITIAL_DATA);
   const formRef = useRef(null);
 

@@ -11,8 +11,8 @@ import {configureStore} from "@reduxjs/toolkit";
 import Routes from "../routes";
 
 const api = createAPI(
-  () => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH)),
-  () => store.dispatch(redirectToRoute(Routes.NOT_FOUND)),
+    () => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH)),
+    () => store.dispatch(redirectToRoute(Routes.NOT_FOUND)),
 );
 
 export const store = configureStore({

@@ -12,7 +12,7 @@ const initialState: CityState = {
 
 const citySlice = createSlice({
   name: `city`,
-  initialState: initialState,
+  initialState,
   reducers: {
     changeCity: (state, action) => {
       state.city = action.payload;

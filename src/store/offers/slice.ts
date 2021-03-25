@@ -33,7 +33,7 @@ const offersSlice = createSlice({
       state.isLoading = action.payload;
     },
   }
-})
+});
 
 export const {
   updateOffers,

@@ -22,10 +22,11 @@ const PrivateRoute = ({render, ...rest}: PrivateRouteProps) => {
         switch (authorizationStatus) {
           case AuthorizationStatus.UNKNOWN:
             return <Loader/>;
-          case AuthorizationStatus.NO_AUTH:
-            return <Redirect to={Routes.LOGIN}/>;
           case AuthorizationStatus.AUTH:
             return render(routeProps);
+          case AuthorizationStatus.NO_AUTH:
+          default:
+            return <Redirect to={Routes.LOGIN}/>;
         }
       }
       }
