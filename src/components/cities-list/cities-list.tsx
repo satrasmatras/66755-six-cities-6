@@ -1,8 +1,7 @@
-import React, {ReactElement} from 'react';
+import React, {memo, ReactElement} from 'react';
 import City from '../../models/city';
 import {RootState} from "../../store";
 import {changeCity} from "../../store/city/slice";
-import {Dispatch} from "redux";
 import {CITIES} from "../../mocks/cities";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -34,4 +33,4 @@ const CitiesList = (): ReactElement => {
   );
 };
 
-export default CitiesList;
+export default memo(CitiesList);

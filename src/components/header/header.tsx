@@ -1,10 +1,9 @@
 import {AuthorizationStatus, logout} from "../../store/user/slice";
 import {Link} from "react-router-dom";
 import Routes from "../../routes";
-import React, {FC, SyntheticEvent} from "react";
+import React, {memo, FC, SyntheticEvent} from "react";
 import {RootState} from "../../store";
 import {useDispatch, useSelector} from "react-redux";
-
 
 const Header: FC= () => {
   const {authorizationStatus, authInfo: user} = useSelector((state: RootState) => state.user);
@@ -78,4 +77,4 @@ const Header: FC= () => {
   );
 };
 
-export default Header;
+export default memo(Header);

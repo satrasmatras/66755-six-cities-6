@@ -1,5 +1,5 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react';
-import L, {Circle, LatLngTuple, MapOptions, Marker} from 'leaflet';
+import React, {memo, ReactElement, useEffect, useRef, useState} from 'react';
+import L, {LatLngTuple, MapOptions, Marker} from 'leaflet';
 import Offer from "../../models/offer";
 
 import 'leaflet/dist/leaflet.css';
@@ -108,4 +108,4 @@ const Map = ({offers, city, className, mainOffer = null}: MapProps): ReactElemen
   );
 };
 
-export default Map;
+export default memo(Map);
