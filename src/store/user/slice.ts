@@ -5,6 +5,8 @@ import {RootState} from "../index";
 import {AxiosInstance} from "axios";
 import Routes from "../../routes";
 import { redirectToRoute } from "../redirect/slice";
+import AuthInfo from "../../models/auth-info";
+import {adaptDataToAuthInfo} from "../../adapters/auth-info";
 
 export enum AuthorizationStatus {
   NO_AUTH = `NO_AUTH`,
@@ -14,10 +16,12 @@ export enum AuthorizationStatus {
 
 export interface UserState {
   authorizationStatus: AuthorizationStatus,
+  authInfo: AuthInfo
 }
 
 const initialState: UserState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  authInfo: null,
 };
 
 const userSlice = createSlice({
@@ -26,23 +30,27 @@ const userSlice = createSlice({
   reducers: {
     setAuthorizationStatus: (state, action) => {
       state.authorizationStatus = action.payload;
+    },
+    setAuthInfo: (state, action) => {
+      state.authInfo = action.payload;
     }
   }
 });
 
 export const {
   setAuthorizationStatus,
+  setAuthInfo
 } = userSlice.actions;
 
 enum ApiRoutes {
   LOGIN = `login`,
+  LOGOUT = `logout`,
 }
 
-export const checkLogin = () => (next: ThunkDispatch<undefined, undefined, Action>, _: RootState, api: AxiosInstance): void => {
-  api.get(ApiRoutes.LOGIN)
-    .then(() => {
-      next(setAuthorizationStatus(AuthorizationStatus.AUTH));
-    });
+export const checkLogin = () => async (next: ThunkDispatch<undefined, undefined, Action>, _: RootState, api: AxiosInstance): Promise<void> => {
+  const response = await api.get(ApiRoutes.LOGIN);
+  next(setAuthorizationStatus(AuthorizationStatus.AUTH));
+  next(setAuthInfo(adaptDataToAuthInfo(response.data)));
 };
 
 export interface LoginPayload {
@@ -52,15 +60,22 @@ export interface LoginPayload {
 
 export const login = (
   {email, password}: LoginPayload
-) => (next: ThunkDispatch<undefined, undefined, Action>, _: RootState, api: AxiosInstance): void => {
-  api.post(ApiRoutes.LOGIN, {
+) => async (next: ThunkDispatch<undefined, undefined, Action>, _: RootState, api: AxiosInstance): Promise<void> => {
+  const response = await api.post(ApiRoutes.LOGIN, {
     email,
     password
-  })
-    .then(() => {
-      next(setAuthorizationStatus(AuthorizationStatus.AUTH));
-      next(redirectToRoute(Routes.MAIN));
-    });
+  });
+
+  next(setAuthorizationStatus(AuthorizationStatus.AUTH));
+  next(setAuthInfo(adaptDataToAuthInfo(response.data)));
+  next(redirectToRoute(Routes.MAIN));
+};
+
+export const logout = () => async (next: ThunkDispatch<undefined, undefined, Action>, _: RootState, api: AxiosInstance): Promise<void> => {
+  await api.get(ApiRoutes.LOGOUT);
+
+  next(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
+  next(setAuthInfo(null));
 };
 
 export default userSlice.reducer;

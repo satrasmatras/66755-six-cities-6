@@ -4,6 +4,7 @@ import {AuthorizationStatus} from "../../store/user/slice";
 import Routes from "../../routes";
 import {connect} from "react-redux";
 import {RootState} from "../../store";
+import Loader from "../loader";
 
 interface PrivateRouteProps {
   path: string,
@@ -12,18 +13,21 @@ interface PrivateRouteProps {
   authorizationStatus: AuthorizationStatus
 }
 
-const PrivateRoute = ({render, path, exact, authorizationStatus}: PrivateRouteProps) => {
+const PrivateRoute = ({render, authorizationStatus, ...rest}: PrivateRouteProps) => {
   return (
     <Route
-      path={path}
-      exact={exact}
+      {...rest}
       render={(routeProps) => {
-        return (
-          authorizationStatus === AuthorizationStatus.AUTH
-            ? render(routeProps)
-            : <Redirect to={Routes.LOGIN} />
-        );
-      }}
+        switch (authorizationStatus) {
+          case AuthorizationStatus.UNKNOWN:
+            return <Loader/>;
+          case AuthorizationStatus.NO_AUTH:
+            return <Redirect to={Routes.LOGIN}/>;
+          case AuthorizationStatus.AUTH:
+            return render(routeProps);
+        }
+      }
+      }
     />
   );
 };
