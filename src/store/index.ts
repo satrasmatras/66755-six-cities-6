@@ -6,11 +6,13 @@ import offerReducer from './offer';
 import thunk from 'redux-thunk';
 import {createAPI} from "../services/api";
 import {AuthorizationStatus, setAuthorizationStatus} from "./user/slice";
-import redirectReducer, {redirectMiddleware} from "./redirect/slice";
+import redirectReducer, {redirectMiddleware, redirectToRoute} from "./redirect/slice";
 import {configureStore} from "@reduxjs/toolkit";
+import Routes from "../routes";
 
 const api = createAPI(
-  () => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH))
+  () => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH)),
+  () => store.dispatch(redirectToRoute(Routes.NOT_FOUND)),
 );
 
 export const store = configureStore({

@@ -7,6 +7,9 @@ import {adaptDataToOffer} from "../../adapters/offers";
 import {adaptDataToComment} from "../../adapters/comments";
 import {CommentPost} from "../../models/comment-post";
 import {createSlice} from "@reduxjs/toolkit";
+import {HttpCode} from "../../services/api";
+import { redirectToRoute } from "../redirect/slice";
+import Routes from "../../routes";
 
 interface OfferState {
   offer: Offer,

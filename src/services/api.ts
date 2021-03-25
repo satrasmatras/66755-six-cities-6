@@ -1,13 +1,16 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse} from "axios";
+import {redirectToRoute} from "../store/redirect/slice";
+import Routes from "../routes";
 
 const BASE_URL = `https://6.react.pages.academy/six-cities`;
 const TIMEOUT = 5000;
 
 export enum HttpCode {
-  UNAUTHORIZED = 401
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
 }
 
-export const createAPI = (onUnauthorized: () => void): AxiosInstance => {
+export const createAPI = (onUnauthorized: () => void, onNotFound: () => void): AxiosInstance => {
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
     timeout: TIMEOUT,
@@ -21,6 +24,12 @@ export const createAPI = (onUnauthorized: () => void): AxiosInstance => {
 
     if (response.status === HttpCode.UNAUTHORIZED) {
       onUnauthorized();
+      throw error;
+    }
+
+
+    if (response.status === HttpCode.NOT_FOUND) {
+      onNotFound();
       throw error;
     }
 

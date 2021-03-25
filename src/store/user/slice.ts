@@ -8,7 +8,8 @@ import { redirectToRoute } from "../redirect/slice";
 
 export enum AuthorizationStatus {
   NO_AUTH = `NO_AUTH`,
-  AUTH = `AUTH`
+  AUTH = `AUTH`,
+  UNKNOWN = `UNKNOWN`,
 }
 
 export interface UserState {
@@ -16,7 +17,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
 const userSlice = createSlice({
