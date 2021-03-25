@@ -1,8 +1,7 @@
 import React, {ReactElement, Fragment, SyntheticEvent, useState, useRef} from 'react';
 import {CommentPost} from "../../models/comment-post";
 import {postComment} from "../../store/offer/slice";
-import {ThunkDispatch} from "redux-thunk";
-import {connect} from "react-redux";
+import {useDispatch} from "react-redux";
 
 interface RatingItem {
   title: string,
@@ -41,12 +40,13 @@ const MIN_REVIEW_LENGTH = 50;
 
 interface CreateCommentFormProps {
   offerId: number,
-  onCreateComment: (data: CommentPost, id: number) => void,
 }
 
-const CreateCommentForm = ({ offerId, onCreateComment }: CreateCommentFormProps): ReactElement => {
+const CreateCommentForm = ({ offerId }: CreateCommentFormProps): ReactElement => {
   const [data, setData] = useState<CommentPost>(INITIAL_DATA);
   const formRef = useRef(null);
+
+  const dispatch = useDispatch();
 
   const handleChange = (event: SyntheticEvent) => {
     const {name, value} = event.target as HTMLInputElement;
@@ -55,7 +55,7 @@ const CreateCommentForm = ({ offerId, onCreateComment }: CreateCommentFormProps)
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-    onCreateComment(data, offerId);
+    dispatch(postComment(data, offerId));
     formRef.current.reset();
   };
 
@@ -121,8 +121,4 @@ const CreateCommentForm = ({ offerId, onCreateComment }: CreateCommentFormProps)
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, any>) => ({
-  onCreateComment: (data: CommentPost, id: number) => dispatch(postComment(data, id)),
-});
-
-export default connect(null, mapDispatchToProps)(CreateCommentForm);
+export default CreateCommentForm;

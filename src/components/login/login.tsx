@@ -1,28 +1,28 @@
 import React, {ReactElement, SyntheticEvent, useState} from 'react';
 import {Link} from 'react-router-dom';
 import Routes from '../../routes';
-import {connect} from "react-redux";
-import {login, LoginPayload} from "../../store/user/slice";
-import {ThunkDispatch} from "redux-thunk";
+import {useDispatch} from "react-redux";
+import {login} from "../../store/user/slice";
 
-interface LoginProps {
-  onLogin: any
-}
-
-const Login = ({onLogin}: LoginProps): ReactElement => {
-  const [login, setLogin] = useState(``);
+const Login = (): ReactElement => {
+  const [email, setEmail] = useState(``);
   const [password, setPassword] = useState(``);
+
+  const dispatch = useDispatch();
 
   const handleClick = (event: SyntheticEvent) => {
     event.preventDefault();
-    onLogin({
-      email: login,
+
+    const data = {
+      email,
       password
-    });
+    };
+
+    dispatch(login(data));
   };
 
-  const handleLoginChange = (event: any) => {
-    setLogin(event.target.value);
+  const handleEmailChange = (event: any) => {
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event: any) => {
@@ -83,8 +83,8 @@ const Login = ({onLogin}: LoginProps): ReactElement => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    value={login}
-                    onChange={handleLoginChange}
+                    value={email}
+                    onChange={handleEmailChange}
                     required
                   />
                 </div>
@@ -121,8 +121,4 @@ const Login = ({onLogin}: LoginProps): ReactElement => {
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, any>) => ({
-  onLogin: (payload: LoginPayload) => dispatch(login(payload)),
-});
-
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;

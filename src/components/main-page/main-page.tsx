@@ -5,30 +5,24 @@ import OffersList from "../offers-list";
 import Map from "../map";
 import CitiesList from "../cities-list";
 import {RootState} from "../../store";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import City from "../../models/city";
 import SortList from "../sort-list";
-import {getOffersByCity, sortOffersBySortType} from "../../selectors/offers";
 import {fetchOffers} from "../../store/offers/slice";
 import Loader from "../loader";
-import {AuthorizationStatus} from "../../store/user/slice";
-import {Link} from "react-router-dom";
-import Routes from "../../routes";
 import Header from "../header/header";
+import {selectSortedOffers} from "../../store/offers/selectors";
 
-interface MainPageProps {
-  offers: Offer[],
-  city: City,
-  hoveredOffer?: Offer,
-  onLoadOffers: any
-  isLoading: boolean,
-  authorizationStatus: AuthorizationStatus,
-}
+const MainPage = (): ReactElement => {
+  const offers: Offer[] = useSelector(selectSortedOffers);
+  const isLoading = useSelector((state: RootState) => state.offers.isLoading);
+  const city: City = useSelector((state: RootState) => state.city.city);
+  const hoveredOffer = useSelector((state: RootState) => state.map.hoveredOffer);
 
-const MainPage = ({offers, city, hoveredOffer, onLoadOffers, isLoading, authorizationStatus}: MainPageProps): ReactElement => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    onLoadOffers();
+    dispatch(fetchOffers());
   }, []);
 
   return (
@@ -57,7 +51,6 @@ const MainPage = ({offers, city, hoveredOffer, onLoadOffers, isLoading, authoriz
       </div>
 
       <div className="page page--gray page--main">
-
         <Header />
 
         <main className="page__main page__main--index">
@@ -103,23 +96,4 @@ MainPage.propTypes = {
   offers: PropTypes.array
 };
 
-const mapStateToProps = ({offers, city, map, user}: RootState) => {
-  const offersCopy = getOffersByCity(offers.offers, city.city.name);
-
-  return {
-    offers: sortOffersBySortType(offersCopy, offers.sortType),
-    city: city.city,
-    hoveredOffer: map.hoveredOffer,
-    isLoading: offers.isLoading,
-    authorizationStatus: user.authorizationStatus
-  };
-};
-
-
-const mapDispatchToProps = (dispatch: any) => ({
-  onLoadOffers() {
-    dispatch(fetchOffers());
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default MainPage;

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import {connect} from "react-redux";
 import {RootState} from "../../store";
 import SortType from "../../models/sort-type";
 import {Dispatch} from "redux";
 import {setSortType} from "../../store/offers/slice";
+import {useDispatch, useSelector} from "react-redux";
 
 const SortTypesMap = {
   [SortType.POPULAR]: `Popular`,
@@ -14,12 +14,10 @@ const SortTypesMap = {
 
 const getSortTypeLabel = (sortType: SortType): string => SortTypesMap[sortType];
 
-interface SortListProps {
-  selectedSortType: SortType,
-  handleSortTypeChange: any
-}
+const SortList = () => {
+  const selectedSortType = useSelector((state: RootState) => state.offers.sortType);
+  const dispatch = useDispatch();
 
-const SortList = ({selectedSortType, handleSortTypeChange}: SortListProps) => {
   const [isHovered, setIsHovered] = useState<boolean>();
   const handleMouseOver = () => setIsHovered(true);
   const handleMouseOut = () => setIsHovered(false);
@@ -53,7 +51,7 @@ const SortList = ({selectedSortType, handleSortTypeChange}: SortListProps) => {
                   key={`sortType-${i}`}
                   className={`places__option ${isActive ? `places__option--active` : ``}`}
                   tabIndex={0}
-                  onClick={() => handleSortTypeChange(sortType)}
+                  onClick={() => dispatch(setSortType(sortType))}
                 >
                   {getSortTypeLabel(sortType)}
                 </li>
@@ -65,12 +63,4 @@ const SortList = ({selectedSortType, handleSortTypeChange}: SortListProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  selectedSortType: state.offers.sortType
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  handleSortTypeChange: (sortType: SortType) => dispatch(setSortType(sortType))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SortList);
+export default SortList;

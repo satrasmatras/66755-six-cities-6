@@ -1,17 +1,18 @@
-import React, {Dispatch, ReactElement} from "react";
+import React, {Dispatch, ReactElement, useCallback} from "react";
 import PropTypes from "prop-types";
 import Offer from "../../models/offer";
 import OfferCard from "../offer-card";
 import OfferCardTypes from "../../models/offer-card-types";
-import {connect} from "react-redux";
 import {updateHoveredOffer} from "../../store/map/slice";
+import {useDispatch} from "react-redux";
 
 interface OffersListProps {
   offers: Offer[],
-  updateHoveredOffer: Dispatch<any>
 }
 
-const OffersList = ({offers, updateHoveredOffer}: OffersListProps): ReactElement => {
+const OffersList = ({offers}: OffersListProps): ReactElement => {
+  const dispatch = useDispatch();
+  const handleHover = useCallback((offer) => dispatch(updateHoveredOffer(offer)), []);
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -22,7 +23,7 @@ const OffersList = ({offers, updateHoveredOffer}: OffersListProps): ReactElement
               cardType={OfferCardTypes.CITY}
               key={i}
               offer={offer}
-              handleHover={updateHoveredOffer}
+              handleHover={handleHover}
             />
           );
         })
@@ -31,12 +32,4 @@ const OffersList = ({offers, updateHoveredOffer}: OffersListProps): ReactElement
   );
 };
 
-OffersList.propTypes = {
-  offers: PropTypes.array,
-};
-
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  updateHoveredOffer: (offer: Offer) => dispatch(updateHoveredOffer(offer))
-});
-
-export default connect(null, mapDispatchToProps)(OffersList);
+export default OffersList;

@@ -1,58 +1,41 @@
 import React, {ReactElement, useEffect, useState} from 'react';
-import {Link, useParams} from "react-router-dom";
-import Routes from "../../routes";
+import {useParams} from "react-router-dom";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
 import {toCapitalize} from "../../utils";
 import CreateCommentForm from "../create-comment-form";
 import Map from "../map";
 import ReviewsList from "../reviews-list";
 import NearPlacesList from "../near-places-list";
-import {RootState} from "../../store";
-import {connect} from "react-redux";
-import {ThunkDispatch} from "redux-thunk";
 import {loadOfferById, loadOfferComments} from "../../store/offer/slice";
 import Loader from "../loader";
 import Comment from "../../models/comment";
 import {AuthorizationStatus} from "../../store/user/slice";
 import Header from "../header/header";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../store";
+import {selectIsAuthorized} from "../../selectors/user";
 
 interface OfferPageParams {
   id: string
 }
 
-interface OfferPageProps {
-  offers?: Offer[],
-  offer: Offer,
-  offerIsLoading: boolean,
-  comments: Comment[],
-  commentsAreLoading: boolean,
-  onLoadOffer: (id: number) => void,
-  onLoadComments: (id: number) => void,
-  isAuthorized: boolean,
-}
+const OfferPage = (): ReactElement => {
 
-const getNearbyOffers = (offers: Offer[], id: number) => {
-  return offers.filter((o) => o.id !== id).slice(0, 3);
-};
-
-const OfferPage = (props: OfferPageProps): ReactElement => {
   const {
-    offers,
     offer,
     offerIsLoading,
-    comments,
     commentsAreLoading,
-    onLoadOffer,
-    onLoadComments,
-    isAuthorized
-  } = props;
+    comments
+  } = useSelector((state: RootState) => state.offer);
+  const isAuthorized = useSelector(selectIsAuthorized);
+  const dispatch = useDispatch();
 
   const {id} = useParams<OfferPageParams>();
   const [nearbyOffers] = useState<Offer[]>([]);
 
   useEffect(() => {
-    onLoadOffer(Number(id));
-    onLoadComments(Number(id));
+    dispatch(loadOfferById(Number(id)));
+    dispatch(loadOfferComments(Number(id)));
   }, [id]);
 
   if (offerIsLoading || !offer) {
@@ -201,17 +184,4 @@ const OfferPage = (props: OfferPageProps): ReactElement => {
   );
 };
 
-const mapStateToProps = ({offer, user}: RootState) => ({
-  offer: offer.offer,
-  offerIsLoading: offer.offerIsLoading,
-  comments: offer.comments,
-  commentsAreLoading: offer.commentsAreLoading,
-  isAuthorized: user.authorizationStatus === AuthorizationStatus.AUTH
-});
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, any>) => ({
-  onLoadOffer: (id: number) => dispatch(loadOfferById(id)),
-  onLoadComments: (id: number) => dispatch(loadOfferComments(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);
+export default OfferPage;

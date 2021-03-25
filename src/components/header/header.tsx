@@ -3,26 +3,16 @@ import {Link} from "react-router-dom";
 import Routes from "../../routes";
 import React, {FC, SyntheticEvent} from "react";
 import {RootState} from "../../store";
-import {connect} from "react-redux";
-import AuthInfo from "../../models/auth-info";
-import {ThunkDispatch} from "redux-thunk";
+import {useDispatch, useSelector} from "react-redux";
 
-interface HeaderProps {
-  authorizationStatus: AuthorizationStatus,
-  user: AuthInfo,
-  onLogout: () => void,
-}
 
-const Header: FC<HeaderProps>= (props) => {
-  const {
-    authorizationStatus,
-    user,
-    onLogout,
-  } = props;
+const Header: FC= () => {
+  const {authorizationStatus, authInfo: user} = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
 
   const handleLogout = (event: SyntheticEvent) => {
     event.preventDefault();
-    onLogout();
+    dispatch(logout());
   }
 
   return (
@@ -30,9 +20,17 @@ const Header: FC<HeaderProps>= (props) => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <a className="header__logo-link header__logo-link--active">
+            <Link
+              className="header__logo-link header__logo-link--active"
+              to={Routes.MAIN}
+            >
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-            </a>
+            </Link>
+            {
+              authorizationStatus === AuthorizationStatus.AUTH && (
+                <Link className="header__logo-link" to={Routes.FAVORITES}>Favorites</Link>
+              )
+            }
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
@@ -80,13 +78,4 @@ const Header: FC<HeaderProps>= (props) => {
   );
 };
 
-const mapStateToProps = ({user}: RootState) => ({
-  authorizationStatus: user.authorizationStatus,
-  user: user.authInfo,
-});
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, any>) => ({
-  onLogout: () => dispatch(logout())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

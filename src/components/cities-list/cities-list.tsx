@@ -1,18 +1,16 @@
 import React, {ReactElement} from 'react';
 import City from '../../models/city';
-import {connect} from "react-redux";
 import {RootState} from "../../store";
 import {changeCity} from "../../store/city/slice";
 import {Dispatch} from "redux";
 import {CITIES} from "../../mocks/cities";
+import {useDispatch, useSelector} from "react-redux";
 
-interface CitiesListProps {
-  activeCity: City,
-  handleCityChange: Dispatch<any>
-}
 
-const CitiesList = (props: CitiesListProps): ReactElement => {
-  const {activeCity, handleCityChange} = props;
+const CitiesList = (): ReactElement => {
+  const {city: activeCity} = useSelector((state: RootState) => state.city);
+  const dispatch = useDispatch();
+
   return (
     <ul className="locations__list tabs__list">
       {
@@ -24,7 +22,7 @@ const CitiesList = (props: CitiesListProps): ReactElement => {
               <a
                 className={`locations__item-link tabs__item ${activeClass}`}
                 href="#"
-                onClick={() => handleCityChange(city)}
+                onClick={() => dispatch(changeCity(city))}
               >
                 <span>{city.name}</span>
               </a>
@@ -36,14 +34,4 @@ const CitiesList = (props: CitiesListProps): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  activeCity: state.city.city
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  handleCityChange(newCity: City): void {
-    dispatch(changeCity(newCity));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CitiesList);
+export default CitiesList;
