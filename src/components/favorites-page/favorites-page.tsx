@@ -1,15 +1,23 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useCallback, useEffect} from 'react';
 import {Link} from "react-router-dom";
 import Routes from "../../routes";
-import Offer from "../../models/offer";
 import FavoritesList from "../favorites-list";
 import Header from "../header/header";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../store";
+import Loader from "../loader";
+import {fetchFavorites, toggleFavorite, ToggleFavoriteTarget} from "../../store/favorites/slice";
 
-interface FavoritesPageProps {
-  offers?: Offer[],
-}
 
-const FavoritesPage = ({offers = []}: FavoritesPageProps): ReactElement => {
+const FavoritesPage = (): ReactElement => {
+  const dispatch = useDispatch();
+  const {favorites: favoriteOffers, isLoading} = useSelector((state: RootState) => state.favorites);
+
+  useEffect(() => {
+    dispatch(fetchFavorites());
+  }, []);
+
+  const handleBookmark = useCallback((offer) => dispatch(toggleFavorite(offer, ToggleFavoriteTarget.FAVORITES)), []);
 
   return (
     <>
@@ -31,14 +39,37 @@ const FavoritesPage = ({offers = []}: FavoritesPageProps): ReactElement => {
 
       <div className="page">
         <Header />
-        <main className="page__main page__main--favorites">
-          <div className="page__favorites-container container">
-            <section className="favorites">
-              <h1 className="favorites__title">Saved listing</h1>
-              <FavoritesList favoriteOffers={offers} />
-            </section>
-          </div>
-        </main>
+        {
+          favoriteOffers?.length > 0 && (
+            <main className="page__main page__main--favorites">
+              <div className="page__favorites-container container">
+                <section className="favorites">
+                  <h1 className="favorites__title">Saved listing</h1>
+                  {
+                    isLoading ? <Loader /> : <FavoritesList favoriteOffers={favoriteOffers} handleBookmark={handleBookmark}/>
+                  }
+                </section>
+              </div>
+            </main>
+          )
+        }
+        {
+          !favoriteOffers?.length && (
+            <main className="page__main page__main--favorites page__main--favorites-empty">
+              <div className="page__favorites-container container">
+                <section className="favorites favorites--empty">
+                  <h1 className="visually-hidden">Favorites (empty)</h1>
+                  <div className="favorites__status-wrapper">
+                    <b className="favorites__status">Nothing yet saved.</b>
+                    <p className="favorites__status-description">Save properties to narrow down search or plan your future
+                      trips.</p>
+                  </div>
+                </section>
+              </div>
+            </main>
+          )
+        }
+
         <footer className="footer container">
           <Link className="footer__logo-link" to={Routes.MAIN}>
             <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>

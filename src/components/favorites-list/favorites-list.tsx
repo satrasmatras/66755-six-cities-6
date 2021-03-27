@@ -7,9 +7,10 @@ import {toCapitalize} from "../../utils";
 
 interface FavoritesListProps {
   favoriteOffers: Offer[],
+  handleBookmark: (offer: Offer) => void,
 }
 
-const FavoritesList = ({favoriteOffers}: FavoritesListProps): ReactElement => {
+const FavoritesList = ({favoriteOffers, handleBookmark}: FavoritesListProps): ReactElement => {
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
@@ -29,6 +30,10 @@ const FavoritesList = ({favoriteOffers}: FavoritesListProps): ReactElement => {
     setGroups(Array.from(groupMap.entries()));
   }, [favoriteOffers]);
 
+  if (!groups.length) {
+    return (<h2>You havent bookmark some offer yet!</h2>);
+  }
+
   return (
     <ul className="favorites__list">
       {groups.map(([city, offers], i) => {
@@ -42,7 +47,8 @@ const FavoritesList = ({favoriteOffers}: FavoritesListProps): ReactElement => {
               </div>
             </div>
             <div className="favorites__places">
-              {offers.map((offer: Offer, i: number) => <OfferCard cardType={OfferCardTypes.FAVORITE} key={i} offer={offer} />)}
+              {
+                offers.map((offer: Offer, i: number) => <OfferCard cardType={OfferCardTypes.FAVORITE} key={i} offer={offer} handleBookmark={handleBookmark}/>)}
             </div>
           </li>
         );

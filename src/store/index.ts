@@ -9,6 +9,7 @@ import {AuthorizationStatus, setAuthorizationStatus} from "./user/slice";
 import redirectReducer, {redirectMiddleware, redirectToRoute} from "./redirect/slice";
 import {configureStore} from "@reduxjs/toolkit";
 import Routes from "../routes";
+import favoritesReducer from './favorites';
 
 const api = createAPI(
     () => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH)),
@@ -23,6 +24,7 @@ export const store = configureStore({
     user: userReducer,
     offer: offerReducer,
     redirect: redirectReducer,
+    favorites: favoritesReducer,
   },
   middleware: [
     thunk.withExtraArgument(api),

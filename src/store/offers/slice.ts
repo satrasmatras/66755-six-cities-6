@@ -6,6 +6,7 @@ import {Action} from "redux";
 import {RootState} from "../index";
 import {AxiosInstance} from "axios";
 import {adaptDataToOffer} from "../../adapters/offers";
+import {updateItem} from "../../services/items";
 
 export interface OffersState {
   offers: Offer[],
@@ -23,8 +24,11 @@ const offersSlice = createSlice({
   name: `offers`,
   initialState,
   reducers: {
-    updateOffers: (state, action) => {
+    setOffers: (state, action) => {
       state.offers = action.payload;
+    },
+    updateOffers: (state, action) => {
+      state.offers = updateItem(state.offers, action.payload);
     },
     setSortType: (state, action) => {
       state.sortType = action.payload;
@@ -36,6 +40,7 @@ const offersSlice = createSlice({
 });
 
 export const {
+  setOffers,
   updateOffers,
   setSortType,
   setIsLoading,
@@ -49,7 +54,7 @@ export const fetchOffers = () => (next: ThunkDispatch<undefined, undefined, Acti
   next(setIsLoading(true));
   api.get(ApiRoutes.FETCH_OFFERS)
     .then(({data}) => {
-      next(updateOffers(data.map(adaptDataToOffer)));
+      next(setOffers(data.map(adaptDataToOffer)));
       next(setIsLoading(false));
     });
 };

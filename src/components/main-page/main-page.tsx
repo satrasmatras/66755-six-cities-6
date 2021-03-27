@@ -12,6 +12,7 @@ import {fetchOffers} from "../../store/offers/slice";
 import Loader from "../loader";
 import Header from "../header/header";
 import {selectSortedOffers} from "../../store/offers/selectors";
+import EmptyMainPage from "../empty-main-page";
 
 const MainPage = (): ReactElement => {
   const offers: Offer[] = useSelector(selectSortedOffers);
@@ -24,6 +25,14 @@ const MainPage = (): ReactElement => {
   useEffect(() => {
     dispatch(fetchOffers());
   }, []);
+
+  const hasNotOffers = !isLoading && !offers.length;
+
+  if (hasNotOffers) {
+    return (
+      <EmptyMainPage />
+    );
+  }
 
   return (
     <>
@@ -90,10 +99,6 @@ const MainPage = (): ReactElement => {
       </div>
     </>
   );
-};
-
-MainPage.propTypes = {
-  offers: PropTypes.array
 };
 
 export default MainPage;

@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
 import {toCapitalize} from "../../utils";
@@ -14,6 +14,7 @@ import Header from "../header/header";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {selectIsAuthorized} from "../../selectors/user";
+import {toggleFavorite, ToggleFavoriteTarget} from "../../store/favorites/slice";
 
 interface OfferPageParams {
   id: string
@@ -29,6 +30,7 @@ const OfferPage = (): ReactElement => {
   } = useSelector((state: RootState) => state.offer);
   const isAuthorized = useSelector(selectIsAuthorized);
   const dispatch = useDispatch();
+  const handleBookmark = useCallback((offer) => dispatch(toggleFavorite(offer, ToggleFavoriteTarget.OFFER)), []);
 
   const {id} = useParams<OfferPageParams>();
   const [nearbyOffers] = useState<Offer[]>([]);
@@ -90,7 +92,11 @@ const OfferPage = (): ReactElement => {
                   <h1 className="property__name">
                     {offer.title}
                   </h1>
-                  <button className={`property__bookmark-button ${offer?.isFavorite ? `property__bookmark-button--active` : ``} button`} type="button">
+                  <button
+                    className={`property__bookmark-button ${offer?.isFavorite ? `property__bookmark-button--active` : ``} button`}
+                    type="button"
+                    onClick={() => handleBookmark(offer)}
+                  >
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>
