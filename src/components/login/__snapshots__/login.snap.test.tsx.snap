@@ -105,6 +105,7 @@ exports[`Should cities list render correctly 1`] = `
         >
           <h1
             class="login__title"
+            data-testid="login-title"
           >
             Sign in
           </h1>

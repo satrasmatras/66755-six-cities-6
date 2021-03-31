@@ -20,10 +20,14 @@ import {adaptDataToComment} from "../../adapters/comments";
 const api = createAPI(undefined, undefined);
 
 describe(`offer async actions work correctly`, () => {
-  it(`should load offer correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
+  const apiMock = new MockAdapter(api);
+  const dispatch = jest.fn();
 
+  beforeEach(() => {
+    dispatch.mockClear();
+  });
+
+  it(`should load offer correctly`, () => {
     const {id} = MOCK_ADAPTED_OFFER;
     const loadOfferLoader = loadOfferById(id);
 
@@ -51,9 +55,6 @@ describe(`offer async actions work correctly`, () => {
       });
   });
   it(`should load comment by offer id correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
-
     const {id} = MOCK_ADAPTED_OFFER;
     const loadOfferCommentsLoader = loadOfferComments(id);
 
@@ -81,9 +82,6 @@ describe(`offer async actions work correctly`, () => {
       });
   });
   it(`should add comment correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
-
     const {id} = MOCK_ADAPTED_OFFER;
 
     const expectedId = MOCK_ADAPTED_COMMENTS.length;

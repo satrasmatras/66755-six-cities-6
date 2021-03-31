@@ -14,10 +14,14 @@ import Routes from "../../routes";
 const api = createAPI(undefined, undefined);
 
 describe(`user async actions work correctly`, () => {
-  it(`should checklogin correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
+  const apiMock = new MockAdapter(api);
+  const dispatch = jest.fn();
 
+  beforeEach(() => {
+    dispatch.mockClear();
+  });
+
+  it(`should checklogin correctly`, () => {
     const checkLoginLoader = checkLogin();
 
     apiMock
@@ -37,10 +41,8 @@ describe(`user async actions work correctly`, () => {
         });
       });
   });
-  it(`should login correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
 
+  it(`should login correctly`, () => {
     const loginLoader = login(MOCK_LOGIN_PAYLOAD);
 
     apiMock
@@ -65,9 +67,6 @@ describe(`user async actions work correctly`, () => {
       });
   });
   it(`should login correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
-
     const logoutLoader = logout();
 
     apiMock

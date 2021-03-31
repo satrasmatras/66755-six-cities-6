@@ -22,9 +22,14 @@ import {SET_OFFER} from "../offer/slice";
 const api = createAPI(undefined, undefined);
 
 describe(`async actions work correctly`, () => {
+  const apiMock = new MockAdapter(api);
+  const dispatch = jest.fn();
+
+  beforeEach(() => {
+    dispatch.mockClear();
+  });
+
   it(`should make correct fetch favorite offers`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const fetchFavoritesLoader = fetchFavorites();
 
     apiMock
@@ -50,9 +55,6 @@ describe(`async actions work correctly`, () => {
   });
 
   it(`should correct toggle favorite for main`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
-
     const {id} = MOCK_ADAPTED_OFFER;
     const expectedIsFavorite = Number(!MOCK_ADAPTED_OFFER.isFavorite);
     const toggleFavoriteUrl = getFavoriteToggle(id, expectedIsFavorite);
@@ -81,9 +83,6 @@ describe(`async actions work correctly`, () => {
   });
 
   it(`should correct toggle favorite for favorites`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
-
     const {id} = MOCK_ADAPTED_OFFER;
     const expectedIsFavorite = Number(!MOCK_ADAPTED_OFFER.isFavorite);
     const toggleFavoriteUrl = getFavoriteToggle(id, expectedIsFavorite);
@@ -112,9 +111,6 @@ describe(`async actions work correctly`, () => {
   });
 
   it(`should correct toggle favorite for offer`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
-
     const {id} = MOCK_ADAPTED_OFFER;
     const expectedIsFavorite = Number(!MOCK_ADAPTED_OFFER.isFavorite);
     const toggleFavoriteUrl = getFavoriteToggle(id, expectedIsFavorite);

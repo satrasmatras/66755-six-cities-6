@@ -1,5 +1,4 @@
-import {MOCK_ADAPTED_AUTH_INFO, MOCK_AUTHORIZATION_STATUS, MOCK_ROUTE} from "../../common-mock";
-import {REDIRECT_TO_ROUTE, redirectToRoute} from "../redirect/slice";
+import {MOCK_ADAPTED_AUTH_INFO, MOCK_AUTHORIZATION_STATUS} from "../../common-mock";
 import {SET_AUTH_INFO, SET_AUTHORIZATION_STATUS, setAuthInfo, setAuthorizationStatus} from "./slice";
 
 describe(`user actions test`, () => {
