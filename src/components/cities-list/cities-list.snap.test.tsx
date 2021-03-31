@@ -3,9 +3,9 @@ import {render} from "@testing-library/react";
 import {Router} from "react-router-dom";
 import browserHistory from "../../services/browser-history";
 import CitiesList from "./cities-list";
-import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 import {initialState} from "../../store/city/slice";
+import configureStore from "redux-mock-store";
 
 const store = configureStore(undefined)({city: initialState});
 

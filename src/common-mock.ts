@@ -9,6 +9,10 @@ import {adaptDataToOffer} from "./adapters/offers";
 import {adaptDataToComment} from "./adapters/comments";
 import {CommentPost} from "./models/comment-post";
 import {adaptDataToAuthInfo} from "./adapters/auth-info";
+import {RootState} from "./store";
+import configureStore from "redux-mock-store";
+import thunk from "redux-thunk";
+import {redirectMiddleware} from "./store/redirect";
 
 export const MOCK_OFFER_FROM_API = {
   "bedrooms": 3,
@@ -124,3 +128,33 @@ export const MOCK_COMMENT_POST: CommentPost = {
   comment: `Lalalalalalallaallaa`,
   rating: 5,
 };
+
+export const MOCK_INITIAL_STATE: RootState = {
+  offers: {
+    offers: MOCK_ADAPTED_OFFERS,
+    isLoading: false,
+    sortType: MOCK_SORT_TYPE
+  },
+  city: {
+    city: MOCK_CITY
+  },
+  map: {
+    hoveredOffer: MOCK_ADAPTED_OFFER
+  },
+  user: {
+    authorizationStatus: MOCK_AUTHORIZATION_STATUS,
+    authInfo: MOCK_ADAPTED_AUTH_INFO
+  },
+  offer: {
+    offer: MOCK_ADAPTED_OFFER,
+    offerIsLoading: false,
+    comments: MOCK_ADAPTED_COMMENTS,
+    commentsAreLoading: false
+  },
+  favorites: {
+    favorites: MOCK_ADAPTED_OFFERS,
+    isLoading: false
+  }
+};
+
+export const MOCK_STORE = configureStore([thunk, redirectMiddleware])(MOCK_INITIAL_STATE);
