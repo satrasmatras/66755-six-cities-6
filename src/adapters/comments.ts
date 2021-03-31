@@ -1,6 +1,6 @@
-import Offer from "../models/offer";
+import Comment from "../models/comment";
 
-export const adaptDataToComment = (data: any): Offer => {
+export const adaptDataToComment = (data: any): Comment => {
 
   const comment = {
     ...data,
@@ -12,11 +12,6 @@ export const adaptDataToComment = (data: any): Offer => {
 
   delete comment.user[`avatar_url`];
   delete comment.user[`is_pro`];
-
-  return comment;
-};
-
-export const adaptCommentToData = (comment: any): Offer => {
 
   return comment;
 };

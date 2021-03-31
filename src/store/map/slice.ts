@@ -1,26 +1,24 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAction, createReducer} from "@reduxjs/toolkit";
 import Offer from "../../models/offer";
 
 export interface MapState {
   hoveredOffer: Offer
 }
 
-const initialState: MapState = {
+export const initialState: MapState = {
   hoveredOffer: null
 };
 
-const mapSlice = createSlice({
-  name: `map`,
-  initialState,
-  reducers: {
-    updateHoveredOffer: (state, action) => {
-      state.hoveredOffer = action.payload;
+export const UPDATE_HOVERED_OFFER = `map/updateHoveredOffer`;
+export const updateHoveredOffer = createAction<Offer>(UPDATE_HOVERED_OFFER);
+
+const mapReducer = createReducer(
+    initialState,
+    (builder) => {
+      builder.addCase(updateHoveredOffer, ((state, action) => {
+        state.hoveredOffer = action.payload;
+      }));
     }
-  }
-});
+);
 
-export const {
-  updateHoveredOffer
-} = mapSlice.actions;
-
-export default mapSlice.reducer;
+export default mapReducer;

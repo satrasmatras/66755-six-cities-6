@@ -7,33 +7,29 @@ import Login from "../login";
 import FavoritesPage from "../favorites-page";
 import OfferPage from "../offer-page";
 import NotFoundPage from "../not-found-page";
-import browserHistory from "../../services/browser-history";
 import PrivateRoute from "../private-route";
 
 const App = (): ReactElement => {
-
   return (
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <Route path={Routes.MAIN} exact>
-          <MainPage />
-        </Route>
-        <Route path={Routes.LOGIN} exact>
-          <Login />
-        </Route>
-        <PrivateRoute
-          path={Routes.FAVORITES}
-          exact
-          render={() => <FavoritesPage />}
-        />
-        <Route path={Routes.OFFER} exact>
-          <OfferPage />
-        </Route>
-        <Route>
-          <NotFoundPage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route path={Routes.MAIN} exact>
+        <MainPage />
+      </Route>
+      <Route path={Routes.LOGIN} exact>
+        <Login />
+      </Route>
+      <PrivateRoute
+        path={Routes.FAVORITES}
+        exact
+        render={() => <FavoritesPage />}
+      />
+      <Route path={Routes.OFFER} exact>
+        <OfferPage />
+      </Route>
+      <Route>
+        <NotFoundPage />
+      </Route>
+    </Switch>
   );
 };
 

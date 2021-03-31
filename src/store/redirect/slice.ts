@@ -1,18 +1,9 @@
 import browserHistory from "../../services/browser-history";
 import {Dispatch, Store} from "redux";
-import {createSlice} from "@reduxjs/toolkit";
+import {createAction} from "@reduxjs/toolkit";
 
-const redirectSlice = createSlice({
-  name: `redirect`,
-  initialState: {},
-  reducers: {
-    redirectToRoute: (state, action) => null,
-  }
-});
-
-export const {
-  redirectToRoute,
-} = redirectSlice.actions;
+export const REDIRECT_TO_ROUTE = `reducer/redirectToRoute`;
+export const redirectToRoute = createAction<string>(REDIRECT_TO_ROUTE);
 
 export const redirectMiddleware = (_store: Store) => (next: Dispatch) => (action: any) => {
   if (action.type === redirectToRoute.type) {
@@ -21,4 +12,3 @@ export const redirectMiddleware = (_store: Store) => (next: Dispatch) => (action
 
   return next(action);
 };
-export default redirectSlice.reducer;

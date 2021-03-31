@@ -1,4 +1,4 @@
-import React, {Dispatch, ReactElement, SyntheticEvent} from 'react';
+import React, {Dispatch, ReactElement} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";

@@ -1,27 +1,22 @@
 import {CITIES} from "../../mocks/cities";
-import {createSlice} from "@reduxjs/toolkit";
+import {createAction, createReducer, createSlice} from "@reduxjs/toolkit";
 import City from "../../models/city";
 
 export interface CityState {
   city: City,
 }
 
-const initialState: CityState = {
+export const initialState: CityState = {
   city: CITIES[0],
 };
 
-const citySlice = createSlice({
-  name: `city`,
-  initialState,
-  reducers: {
-    changeCity: (state, action) => {
-      state.city = action.payload;
-    }
-  }
+export const CHANGE_CITY = `city/changeCity`;
+export const changeCity = createAction<City>(CHANGE_CITY);
+
+const cityReducer = createReducer(initialState, (builder) => {
+  builder.addCase(changeCity, ((state, action) => {
+    state.city = action.payload;
+  }));
 });
 
-export const {
-  changeCity,
-} = citySlice.actions;
-
-export default citySlice.reducer;
+export default cityReducer;

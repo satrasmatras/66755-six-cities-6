@@ -1,7 +1,5 @@
-import redirectReducer, {redirectMiddleware} from './slice';
+import {redirectMiddleware} from './slice';
 
 export {
   redirectMiddleware
 };
-
-export default redirectReducer;

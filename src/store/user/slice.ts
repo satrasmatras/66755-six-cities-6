@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAction, createReducer} from "@reduxjs/toolkit";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {RootState} from "../index";
@@ -19,30 +19,30 @@ export interface UserState {
   authInfo: AuthInfo
 }
 
-const initialState: UserState = {
+export const initialState: UserState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   authInfo: null,
 };
 
-const userSlice = createSlice({
-  name: `user`,
-  initialState,
-  reducers: {
-    setAuthorizationStatus: (state, action) => {
-      state.authorizationStatus = action.payload;
-    },
-    setAuthInfo: (state, action) => {
-      state.authInfo = action.payload;
+export const SET_AUTHORIZATION_STATUS = `user/setAuthorizationStatus`;
+export const setAuthorizationStatus = createAction<AuthorizationStatus>(SET_AUTHORIZATION_STATUS);
+
+export const SET_AUTH_INFO = `user/setAuthInfo`;
+export const setAuthInfo = createAction<AuthInfo>(SET_AUTH_INFO);
+
+const userReducer = createReducer(
+    initialState,
+    (builder) => {
+      builder.addCase(setAuthorizationStatus, (state, action) => {
+        state.authorizationStatus = action.payload;
+      });
+      builder.addCase(setAuthInfo, (state, action) => {
+        state.authInfo = action.payload;
+      });
     }
-  }
-});
+);
 
-export const {
-  setAuthorizationStatus,
-  setAuthInfo
-} = userSlice.actions;
-
-enum ApiRoutes {
+export enum ApiRoutes {
   LOGIN = `login`,
   LOGOUT = `logout`,
 }
@@ -78,4 +78,4 @@ export const logout = () => async (next: ThunkDispatch<undefined, undefined, Act
   next(setAuthInfo(null));
 };
 
-export default userSlice.reducer;
+export default userReducer;

@@ -5,7 +5,6 @@ import {changeCity} from "../../store/city/slice";
 import {CITIES} from "../../mocks/cities";
 import {useDispatch, useSelector} from "react-redux";
 
-
 const CitiesList = (): ReactElement => {
   const {city: activeCity} = useSelector((state: RootState) => state.city);
   const dispatch = useDispatch();

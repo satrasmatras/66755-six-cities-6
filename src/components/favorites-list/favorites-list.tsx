@@ -57,8 +57,4 @@ const FavoritesList = ({favoriteOffers, handleBookmark}: FavoritesListProps): Re
   );
 };
 
-FavoritesList.propTypes = {
-  offers: PropTypes.array,
-};
-
 export default FavoritesList;

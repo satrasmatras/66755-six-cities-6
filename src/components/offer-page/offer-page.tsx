@@ -8,8 +8,6 @@ import ReviewsList from "../reviews-list";
 import NearPlacesList from "../near-places-list";
 import {loadOfferById, loadOfferComments} from "../../store/offer/slice";
 import Loader from "../loader";
-import Comment from "../../models/comment";
-import {AuthorizationStatus} from "../../store/user/slice";
 import Header from "../header/header";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
@@ -21,7 +19,6 @@ interface OfferPageParams {
 }
 
 const OfferPage = (): ReactElement => {
-
   const {
     offer,
     offerIsLoading,
