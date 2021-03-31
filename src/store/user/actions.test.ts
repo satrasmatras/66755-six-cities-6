@@ -1,4 +1,4 @@
-import {MOCK_AUTHORIZATION_STATUS, MOCK_ROUTE} from "../../common-mock";
+import {MOCK_ADAPTED_AUTH_INFO, MOCK_AUTHORIZATION_STATUS, MOCK_ROUTE} from "../../common-mock";
 import {REDIRECT_TO_ROUTE, redirectToRoute} from "../redirect/slice";
 import {SET_AUTH_INFO, SET_AUTHORIZATION_STATUS, setAuthInfo, setAuthorizationStatus} from "./slice";
 
@@ -17,11 +17,11 @@ describe(`user actions test`, () => {
 
   it(`setAuthInfo is correct`, () => {
     expect(
-        setAuthInfo(MOCK_AUTH_INFO)
+        setAuthInfo(MOCK_ADAPTED_AUTH_INFO)
     ).toStrictEqual(
         {
           type: SET_AUTH_INFO,
-          payload: MOCK_AUTH_INFO
+          payload: MOCK_ADAPTED_AUTH_INFO
         }
     );
   });
