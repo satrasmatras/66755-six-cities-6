@@ -8,3 +8,8 @@ export const selectIsAuthorized = createSelector(
     selectAuthorizationStatus,
     (status) => status === AuthorizationStatus.AUTH
 );
+
+export const selectIsUnknownAuthorized = createSelector(
+    selectAuthorizationStatus,
+    (status) => status === AuthorizationStatus.UNKNOWN
+);

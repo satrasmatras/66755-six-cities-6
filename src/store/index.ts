@@ -10,6 +10,7 @@ import {redirectMiddleware, redirectToRoute} from "./redirect/slice";
 import {configureStore} from "@reduxjs/toolkit";
 import Routes from "../routes";
 import favoritesReducer from './favorites';
+import browserHistory from "../browser-history";
 
 const onUnauthorized = () => {
   store.dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
@@ -32,7 +33,7 @@ export const store = configureStore({
   },
   middleware: [
     thunk.withExtraArgument(api),
-    redirectMiddleware
+    redirectMiddleware(browserHistory)
   ]
 });
 

@@ -26,7 +26,7 @@ const PrivateRoute = ({render, ...rest}: PrivateRouteProps) => {
             return render(routeProps);
           case AuthorizationStatus.NO_AUTH:
           default:
-            return <Redirect to={Routes.LOGIN}/>;
+            return <Redirect data-testid="redirect" to={Routes.LOGIN}/>;
         }
       }
       }

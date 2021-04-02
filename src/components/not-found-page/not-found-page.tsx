@@ -33,7 +33,7 @@ const NotFoundPage = (): ReactElement => {
         <Header />
 
         <main className="page__main page__main--index">
-          <h1 className="visually-hidden">Cities</h1>
+          <h1 className="visually-hidden">Not Found </h1>
           <div className="tabs">
             <section className="locations container">
               <ul className="locations__list tabs__list">

@@ -1,86 +1,116 @@
 import React from "react";
-import {render} from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
 import {Router} from "react-router-dom";
-import browserHistory from "../../services/browser-history";
-import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
-import {AuthorizationStatus, initialState as userInitialState} from "../../store/user/slice";
-import {initialState as favoritesInitialState} from "../../store/favorites/slice";
-import thunk from "redux-thunk";
+import {AuthorizationStatus} from "../../store/user/slice";
 import PrivateRoute from "./private-route";
-import Routes from "../../routes";
-import FavoritesPage from "../favorites-page";
-
-const mockStore = configureStore([thunk]);
+import {MOCK_ADAPTED_AUTH_INFO, MOCK_INITIAL_STATE, mockConfigureStore} from "../../common-mock";
+import {createMemoryHistory, MemoryHistory} from "history";
+import "@testing-library/jest-dom";
+import {Route} from "react-router";
 
 const unknownUserInitialState = {
-  ...userInitialState,
-  authorizationStatus: AuthorizationStatus.UNKNOWN
+  ...MOCK_INITIAL_STATE,
+  user: {
+    authorizationStatus: AuthorizationStatus.UNKNOWN,
+    authInfo: MOCK_ADAPTED_AUTH_INFO,
+  }
 };
+
 const authUserInitialState = {
-  ...userInitialState,
-  authorizationStatus: AuthorizationStatus.AUTH
+  ...MOCK_INITIAL_STATE,
+  user: {
+    authorizationStatus: AuthorizationStatus.AUTH,
+    authInfo: MOCK_ADAPTED_AUTH_INFO,
+  }
 };
+
 const noAuthUserInitialState = {
-  ...userInitialState,
-  authorizationStatus: AuthorizationStatus.NO_AUTH
+  ...MOCK_INITIAL_STATE,
+  user: {
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
+    authInfo: MOCK_ADAPTED_AUTH_INFO,
+  }
 };
 
-it(`Private route should show loader correctly`, () => {
-  browserHistory.push(Routes.FAVORITES);
 
-  const {container} = render(
-      <Provider store={mockStore({
-        user: unknownUserInitialState,
-      })}>
-        <Router history={browserHistory}>
-          <PrivateRoute
-            exact
-            path={Routes.FAVORITES}
-            render={() => <FavoritesPage />}
-          />
-        </Router>
-      </Provider>
-  );
-  expect(container).toMatchSnapshot();
-});
+describe(`Private route should work correctly`, () => {
+  let history: MemoryHistory;
+  let mockStore: any;
 
-it(`Private route should open favorites correctly`, () => {
-  browserHistory.push(Routes.FAVORITES);
+  beforeEach(() => {
+    history = createMemoryHistory();
+    mockStore = mockConfigureStore(history);
+    history.push(`/private`);
+  });
 
-  const {container} = render(
-      <Provider store={mockStore({
-        user: authUserInitialState,
-        favorites: favoritesInitialState
-      })}>
-        <Router history={browserHistory}>
-          <PrivateRoute
-            exact
-            path={Routes.FAVORITES}
-            render={() => <FavoritesPage />}
-          />
-        </Router>
-      </Provider>
-  );
-  expect(container).toMatchSnapshot();
-});
+  it(`Private route should not be rendered`, async () => {
+    render(
+        <Provider store={mockStore(noAuthUserInitialState)}>
+          <Router history={history}>
+            <Route
+              exact
+              path={`/login`}
+            >
+              <h1>Public Route</h1>
+            </Route>
+            <PrivateRoute
+              exact
+              path={`/private`}
+              render={() => <h1>Private Route</h1>}
+            />
+          </Router>
+        </Provider>
+    );
 
-it(`Private route should open login form correctly`, () => {
-  browserHistory.push(Routes.FAVORITES);
+    await expect(screen.queryByText(/Public Route/i)).toBeInTheDocument();
+    await expect(screen.queryByText(/Private Route/i)).not.toBeInTheDocument();
+  });
 
-  const {container} = render(
-      <Provider store={mockStore({
-        user: noAuthUserInitialState,
-        favorites: favoritesInitialState
-      })}>
-        <Router history={browserHistory}>
-          <PrivateRoute
-            exact
-            path={Routes.FAVORITES}
-            render={() => <FavoritesPage />}
-          />
-        </Router>
-      </Provider>
-  );
-  expect(container).toMatchSnapshot();
+  it(`Private route should be render loading when unknown`, async () => {
+    render(
+        <Provider store={mockStore(unknownUserInitialState)}>
+          <Router history={history}>
+            <Route
+              exact
+              path={`/login`}
+            >
+              <h1>Public Route</h1>
+            </Route>
+            <PrivateRoute
+              exact
+              path={`/private`}
+              render={() => <h1>Private Route</h1>}
+            />
+          </Router>
+        </Provider>
+    );
+
+    await expect(screen.queryByText(/Public Route/i)).not.toBeInTheDocument();
+    await expect(screen.queryByText(/Private Route/i)).not.toBeInTheDocument();
+    await expect(screen.queryByText(/Loading.../i)).toBeInTheDocument();
+  });
+
+  it(`Private route should be render loading when unknown`, async () => {
+    render(
+        <Provider store={mockStore(authUserInitialState)}>
+          <Router history={history}>
+            <Route
+              exact
+              path={`/login`}
+            >
+              <h1>Public Route</h1>
+            </Route>
+            <PrivateRoute
+              exact
+              path={`/private`}
+              render={() => <h1>Private Route</h1>}
+            />
+          </Router>
+        </Provider>
+    );
+
+    await expect(screen.queryByText(/Public Route/i)).not.toBeInTheDocument();
+    await expect(screen.queryByText(/Private Route/i)).toBeInTheDocument();
+  });
 });

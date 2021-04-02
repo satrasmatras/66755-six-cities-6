@@ -1,7 +1,6 @@
 import React, {ReactElement} from 'react';
-import {Router as BrowserRouter, Switch, Route} from "react-router-dom";
+import {Switch, Route} from "react-router-dom";
 import Routes from "../../routes";
-import PropTypes from "prop-types";
 import MainPage from "../main-page";
 import Login from "../login";
 import FavoritesPage from "../favorites-page";
@@ -12,10 +11,10 @@ import PrivateRoute from "../private-route";
 const App = (): ReactElement => {
   return (
     <Switch>
-      <Route path={Routes.MAIN} exact>
+      <Route exact path={Routes.MAIN}>
         <MainPage />
       </Route>
-      <Route path={Routes.LOGIN} exact>
+      <Route exact path={Routes.LOGIN}>
         <Login />
       </Route>
       <PrivateRoute
@@ -23,7 +22,7 @@ const App = (): ReactElement => {
         exact
         render={() => <FavoritesPage />}
       />
-      <Route path={Routes.OFFER} exact>
+      <Route exact path={Routes.OFFER}>
         <OfferPage />
       </Route>
       <Route>
@@ -31,10 +30,6 @@ const App = (): ReactElement => {
       </Route>
     </Switch>
   );
-};
-
-App.propTypes = {
-  offers: PropTypes.array,
 };
 
 export default App;

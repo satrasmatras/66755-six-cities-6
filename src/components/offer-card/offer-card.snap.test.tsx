@@ -4,7 +4,7 @@ import OfferCard from "./offer-card";
 import OfferCardTypes from "../../models/offer-card-types";
 import {MOCK_ADAPTED_OFFER} from "../../common-mock";
 import {Router} from "react-router-dom";
-import browserHistory from "../../services/browser-history";
+import browserHistory from "../../browser-history";
 
 it(`Should main card render correctly`, () => {
   const {container} = render(

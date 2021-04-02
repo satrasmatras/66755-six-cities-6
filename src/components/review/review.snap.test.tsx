@@ -2,7 +2,7 @@ import React from "react";
 import {render} from "@testing-library/react";
 
 import {Router} from "react-router-dom";
-import browserHistory from "../../services/browser-history";
+import browserHistory from "../../browser-history";
 import Review from "./review";
 import {MOCK_ADAPTED_COMMENT} from "../../common-mock";
 

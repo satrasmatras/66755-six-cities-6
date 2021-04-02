@@ -1,5 +1,4 @@
 import React, {ReactElement, useEffect} from 'react';
-import PropTypes from 'prop-types';
 import Offer from "../../models/offer";
 import OffersList from "../offers-list";
 import Map from "../map";

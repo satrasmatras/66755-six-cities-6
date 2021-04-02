@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should cities list render correctly 1`] = `
+exports[`Should NotFoundPage render correctly 1`] = `
 <div>
   <div
     style="display: none;"
@@ -77,14 +77,37 @@ exports[`Should cities list render correctly 1`] = `
               >
                 <a
                   class="header__nav-link header__nav-link--profile"
-                  href="/login"
+                  href="/favorites"
                 >
-                  Sign in
+                  <div
+                    class="header__avatar-wrapper user__avatar-wrapper"
+                  >
+                    <img
+                      alt="Oliver.conner"
+                      src="img/1.png"
+                    />
+                  </div>
+                  <span
+                    class="header__user-name user__name"
+                  >
+                    Oliver.conner
+                  </span>
                 </a>
               </li>
               <li
                 class="header_nav-item"
-              />
+              >
+                <a
+                  class="header__nav-link header__nav-link--profile"
+                  href="#"
+                >
+                  <span
+                    class="header__user-name user__name"
+                  >
+                    Logout
+                  </span>
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -96,7 +119,7 @@ exports[`Should cities list render correctly 1`] = `
       <h1
         class="visually-hidden"
       >
-        Cities
+        Not Found 
       </h1>
       <div
         class="tabs"

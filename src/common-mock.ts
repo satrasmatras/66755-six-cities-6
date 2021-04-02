@@ -13,6 +13,9 @@ import {RootState} from "./store";
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import {redirectMiddleware} from "./store/redirect";
+import {createMemoryHistory, MemoryHistory} from "history";
+import MockAdapter from "axios-mock-adapter";
+import {createAPI} from "./services/api";
 
 export const MOCK_OFFER_FROM_API = {
   "bedrooms": 3,
@@ -157,4 +160,9 @@ export const MOCK_INITIAL_STATE: RootState = {
   }
 };
 
-export const MOCK_STORE = configureStore([thunk, redirectMiddleware])(MOCK_INITIAL_STATE);
+export const mockConfigureStore = (history: MemoryHistory = createMemoryHistory()) => configureStore(
+    [
+      thunk,
+      redirectMiddleware(history)
+    ]
+);
