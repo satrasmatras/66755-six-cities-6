@@ -34,7 +34,7 @@ describe(`Test routing`, () => {
         </Provider>
     );
 
-    await expect(screen.getByText(`Cities`)).toBeInTheDocument();
+    await expect(screen.queryByText(`Cities`)).toBeInTheDocument();
   });
 
   it(`Render 'OfferPage' when user navigate to '/offer/1' url`, async () => {
@@ -47,7 +47,7 @@ describe(`Test routing`, () => {
         </Provider>
     );
 
-    await expect(screen.getByText(MOCK_ADAPTED_OFFER.title)).toBeInTheDocument();
+    await expect(screen.getByTestId(`offer-title`)).toBeInTheDocument();
   });
 
   it(`Render 'Favorites' when user navigate to '/favorites' url`, async () => {
@@ -60,7 +60,7 @@ describe(`Test routing`, () => {
         </Provider>
     );
 
-    await expect(screen.getByText(`Saved listing`)).toBeInTheDocument();
+    await expect(screen.queryByText(`Saved listing`)).toBeInTheDocument();
   });
 
   it(`Render 'Login' when user navigate to '/login' url`, async () => {
@@ -86,6 +86,6 @@ describe(`Test routing`, () => {
         </Provider>
     );
 
-    await expect(screen.getByText(`Oops. Page Not Found`)).toBeInTheDocument();
+    await expect(screen.queryByText(`Oops. Page Not Found`)).toBeInTheDocument();
   });
 });

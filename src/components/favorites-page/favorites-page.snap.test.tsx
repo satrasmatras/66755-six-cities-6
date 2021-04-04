@@ -15,7 +15,7 @@ const store = mockStore({
   favorites: favoritesInitialState,
 });
 
-it(`Should cities list render correctly`, () => {
+it(`Should favorites page render correctly`, () => {
   const {container} = render(
       <Provider store={store}>
         <Router history={browserHistory}>

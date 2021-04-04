@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should favorites list render correctly 1`] = `
+exports[`Should loader render correctly 1`] = `
 <div>
   <p>
     Loading...

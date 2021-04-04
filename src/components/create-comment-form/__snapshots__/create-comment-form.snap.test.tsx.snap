@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should cities list render correctly 1`] = `
+exports[`Should create comment form render correctly 1`] = `
 <div>
   <form
     action="#"

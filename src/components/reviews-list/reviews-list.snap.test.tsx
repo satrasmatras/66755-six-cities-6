@@ -6,12 +6,11 @@ import browserHistory from "../../browser-history";
 import {MOCK_ADAPTED_COMMENTS} from "../../common-mock";
 import ReviewsList from "./reviews-list";
 
-it(`Should main card render correctly`, () => {
+it(`Should reviews list render correctly`, () => {
   const {container} = render(
       <Router history={browserHistory}>
-        <ReviewsList comments={MOCK_ADAPTED_COMMENTS}/>
+        <ReviewsList comments={MOCK_ADAPTED_COMMENTS} count={MOCK_ADAPTED_COMMENTS.length} />
       </Router>
   );
   expect(container).toMatchSnapshot();
 });
-

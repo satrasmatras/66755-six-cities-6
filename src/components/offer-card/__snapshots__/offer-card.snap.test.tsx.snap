@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should favorite render correctly 1`] = `
+exports[`offer card should render correctly Should favorite render correctly 1`] = `
 <div>
   <article
     class="favorites__card place-card"
@@ -96,7 +96,7 @@ exports[`Should favorite render correctly 1`] = `
 </div>
 `;
 
-exports[`Should main card render correctly 1`] = `
+exports[`offer card should render correctly Should main card render correctly 1`] = `
 <div>
   <article
     class="cities__place-card place-card"
@@ -192,7 +192,7 @@ exports[`Should main card render correctly 1`] = `
 </div>
 `;
 
-exports[`Should nearby render correctly 1`] = `
+exports[`offer card should render correctly Should nearby render correctly 1`] = `
 <div>
   <article
     class="near-places__card place-card"

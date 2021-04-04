@@ -9,7 +9,7 @@ import {initialState} from "../../store/user/slice";
 
 const store = configureStore(undefined)({user: initialState});
 
-it(`Should cities list render correctly`, () => {
+it(`Should empty main page render correctly`, () => {
   const {container} = render(
       <Provider store={store}>
         <Router history={browserHistory}>

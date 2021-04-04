@@ -9,7 +9,7 @@ import {MOCK_ADAPTED_OFFER} from "../../common-mock";
 
 const store = configureStore(undefined)({});
 
-it(`Should cities list render correctly`, () => {
+it(`Should create comment form render correctly`, () => {
   const {container} = render(
       <Provider store={store}>
         <Router history={browserHistory}>

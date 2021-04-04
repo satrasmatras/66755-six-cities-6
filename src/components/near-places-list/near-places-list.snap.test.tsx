@@ -5,7 +5,7 @@ import {MOCK_ADAPTED_OFFERS} from "../../common-mock";
 import {Router} from "react-router-dom";
 import browserHistory from "../../browser-history";
 
-it(`Should login render correctly`, () => {
+it(`Should near places render correctly`, () => {
   const {container} = render(
       <Router history={browserHistory}>
         <NearPlacesList offers={MOCK_ADAPTED_OFFERS} />

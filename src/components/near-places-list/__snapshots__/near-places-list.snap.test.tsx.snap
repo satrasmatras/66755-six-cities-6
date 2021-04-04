@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should login render correctly 1`] = `
+exports[`Should near places render correctly 1`] = `
 <div>
   <div
     class="near-places__list places__list"

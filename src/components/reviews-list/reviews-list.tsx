@@ -4,12 +4,13 @@ import Comment from "../../models/comment";
 
 interface ReviewsListProps {
   comments: Comment[],
+  count: number,
 }
 
-const ReviewsList = ({comments}: ReviewsListProps): ReactElement => {
+const ReviewsList = ({comments, count}: ReviewsListProps): ReactElement => {
   return (
     <>
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{count}</span></h2>
 
       <ul className="reviews__list">
         {comments.map((comment, i) => {

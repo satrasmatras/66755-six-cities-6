@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should main card render correctly 1`] = `
+exports[`Should review render correctly 1`] = `
 <div>
   <li
     class="reviews__item"

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should cities list render correctly 1`] = `
+exports[`Should empty main page render correctly 1`] = `
 <div>
   <div
     style="display: none;"

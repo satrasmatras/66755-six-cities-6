@@ -11,7 +11,7 @@ import {MOCK_ADAPTED_OFFERS} from "../../common-mock";
 const mockStore = configureStore([thunk]);
 const store = mockStore();
 
-it(`Should cities list render correctly`, () => {
+it(`Should offers list render correctly`, () => {
   const {container} = render(
       <Provider store={store}>
         <Router history={browserHistory}>

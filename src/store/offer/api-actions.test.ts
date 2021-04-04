@@ -3,15 +3,21 @@ import MockAdapter from "axios-mock-adapter";
 import {
   MOCK_ADAPTED_COMMENT,
   MOCK_ADAPTED_COMMENTS,
-  MOCK_ADAPTED_OFFER,
+  MOCK_ADAPTED_OFFER, MOCK_ADAPTED_OFFERS,
   MOCK_COMMENTS_FROM_API,
-  MOCK_OFFER_FROM_API,
+  MOCK_OFFER_FROM_API, MOCK_OFFERS_FROM_API,
 } from "../../common-mock";
 import {
   getCommentsRoute,
+  getNearbyOffers,
   getOfferRoute,
   loadOfferById,
-  loadOfferComments, postComment, SET_COMMENTS, SET_COMMENTS_IS_LOADING,
+  loadOfferComments,
+  postComment,
+  SET_COMMENTS,
+  SET_COMMENTS_IS_LOADING,
+  SET_NEARBY_OFFERS,
+  SET_NEARBY_OFFERS_ARE_LOADING,
   SET_OFFER,
   SET_OFFER_IS_LOADING
 } from "./slice";
@@ -77,6 +83,33 @@ describe(`offer async actions work correctly`, () => {
         });
         expect(dispatch).toHaveBeenCalledWith({
           type: SET_COMMENTS_IS_LOADING,
+          payload: false
+        });
+      });
+  });
+  it(`should load nearby by offer id correctly`, () => {
+    const {id} = MOCK_ADAPTED_OFFER;
+    const loadOfferNearbyLoader = getNearbyOffers(id);
+
+    const getNearbysByIdUrl = `/hotels/${id}/nearby`;
+
+    apiMock
+      .onGet(getNearbysByIdUrl)
+      .reply(200, MOCK_OFFERS_FROM_API);
+
+    return loadOfferNearbyLoader(dispatch, undefined, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledWith({
+          type: SET_NEARBY_OFFERS_ARE_LOADING,
+          payload: true
+        });
+        expect(dispatch).toHaveBeenCalledWith({
+          type: SET_NEARBY_OFFERS,
+          payload: MOCK_ADAPTED_OFFERS
+        });
+        expect(dispatch).toHaveBeenCalledWith({
+          type: SET_NEARBY_OFFERS_ARE_LOADING,
           payload: false
         });
       });

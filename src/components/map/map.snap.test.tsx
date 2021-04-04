@@ -6,18 +6,27 @@ import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 import {initialState as userInitialState} from "../../store/user/slice";
 import thunk from "redux-thunk";
-import Header from "./header";
+import {initialState as offersInitialState} from "../../store/offers/slice";
+import Header from "../header/header";
+import Map from "./map";
+import {MOCK_ADAPTED_OFFER, MOCK_ADAPTED_OFFERS, MOCK_CITY} from "../../common-mock";
 
 const mockStore = configureStore([thunk]);
 const store = mockStore({
   user: userInitialState,
+  offers: offersInitialState
 });
 
-it(`Should header render correctly`, () => {
+it(`Should map render correctly`, () => {
   const {container} = render(
       <Provider store={store}>
         <Router history={browserHistory}>
-          <Header />
+          <Map
+            mainOffer={MOCK_ADAPTED_OFFER}
+            offers={MOCK_ADAPTED_OFFERS}
+            city={MOCK_CITY}
+            className={`map cities__map`}
+          />
         </Router>
       </Provider>
   );

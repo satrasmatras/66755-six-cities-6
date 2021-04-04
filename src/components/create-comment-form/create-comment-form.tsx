@@ -37,6 +37,7 @@ const INITIAL_DATA: CommentPost = {
 };
 
 const MIN_REVIEW_LENGTH = 50;
+const MAX_REVIEW_LENGTH = 300;
 
 interface CreateCommentFormProps {
   offerId: number,
@@ -58,6 +59,8 @@ const CreateCommentForm = ({offerId}: CreateCommentFormProps): ReactElement => {
     dispatch(postComment(data, offerId));
     formRef.current.reset();
   };
+
+  const buttonIsEnabled = data.comment.length >= MIN_REVIEW_LENGTH && data.comment.length <= MAX_REVIEW_LENGTH;
 
   return (
     <form
@@ -112,7 +115,7 @@ const CreateCommentForm = ({offerId}: CreateCommentFormProps): ReactElement => {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={data.comment.length < MIN_REVIEW_LENGTH}
+          disabled={!buttonIsEnabled}
         >
           Submit
         </button>

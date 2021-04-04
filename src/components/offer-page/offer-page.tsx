@@ -6,13 +6,20 @@ import CreateCommentForm from "../create-comment-form";
 import Map from "../map";
 import ReviewsList from "../reviews-list";
 import NearPlacesList from "../near-places-list";
-import {loadOfferById, loadOfferComments} from "../../store/offer/slice";
+import {
+  getNearbyOffers,
+  loadOfferById,
+  loadOfferComments,
+  selectNearbyOffers,
+  selectNearbyOffersIsLoading
+} from "../../store/offer/slice";
 import Loader from "../loader";
 import Header from "../header/header";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {selectIsAuthorized} from "../../selectors/user";
 import {toggleFavorite, ToggleFavoriteTarget} from "../../store/favorites/slice";
+import {selectCommentsCount, selectLastTenComments} from "../../selectors/comments";
 
 interface OfferPageParams {
   id: string
@@ -23,18 +30,21 @@ const OfferPage = (): ReactElement => {
     offer,
     offerIsLoading,
     commentsAreLoading,
-    comments
   } = useSelector((state: RootState) => state.offer);
+  const comments = useSelector(selectLastTenComments);
+  const commentsCount = useSelector(selectCommentsCount);
   const isAuthorized = useSelector(selectIsAuthorized);
   const dispatch = useDispatch();
   const handleBookmark = useCallback((offer) => dispatch(toggleFavorite(offer, ToggleFavoriteTarget.OFFER)), []);
 
   const {id} = useParams<OfferPageParams>();
-  const [nearbyOffers] = useState<Offer[]>([]);
+  const nearbyOffers = useSelector(selectNearbyOffers);
+  const nearbyOffersIsLoading = useSelector(selectNearbyOffersIsLoading);
 
   useEffect(() => {
     dispatch(loadOfferById(Number(id)));
     dispatch(loadOfferComments(Number(id)));
+    dispatch(getNearbyOffers(Number(id)));
   }, [id]);
 
   if (offerIsLoading || !offer) {
@@ -86,7 +96,10 @@ const OfferPage = (): ReactElement => {
                 }
 
                 <div className="property__name-wrapper">
-                  <h1 className="property__name">
+                  <h1
+                    className="property__name"
+                    data-testid="offer-title"
+                  >
                     {offer.title}
                   </h1>
                   <button
@@ -156,7 +169,7 @@ const OfferPage = (): ReactElement => {
                     commentsAreLoading && <Loader />
                   }
                   {
-                    !commentsAreLoading && <ReviewsList comments={comments} />
+                    !commentsAreLoading && <ReviewsList comments={comments} count={commentsCount}/>
                   }
 
                   {
@@ -168,12 +181,16 @@ const OfferPage = (): ReactElement => {
                 </section>
               </div>
             </div>
-            <Map
-              offers={nearbyOffers}
-              className={`property__map map`}
-              city={offer.city}
-              mainOffer={offer}
-            />
+            {
+              nearbyOffersIsLoading ?
+                <Loader /> :
+                <Map
+                  offers={nearbyOffers}
+                  className={`property__map map`}
+                  city={offer.city}
+                  mainOffer={offer}
+                />
+            }
           </section>
           <div className="container">
             <section className="near-places places">

@@ -151,6 +151,10 @@ export const MOCK_INITIAL_STATE: RootState = {
   offer: {
     offer: MOCK_ADAPTED_OFFER,
     offerIsLoading: false,
+    nearbyOffers: [
+      MOCK_ADAPTED_OFFER,
+    ],
+    nearbyOffersIsLoading: false,
     comments: MOCK_ADAPTED_COMMENTS,
     commentsAreLoading: false
   },

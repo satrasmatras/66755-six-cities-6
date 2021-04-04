@@ -15,7 +15,7 @@ const store = mockStore({
   offers: offersInitialState
 });
 
-it(`Should cities list render correctly`, () => {
+it(`Should main page render correctly`, () => {
   const {container} = render(
       <Provider store={store}>
         <Router history={browserHistory}>

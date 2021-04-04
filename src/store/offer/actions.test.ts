@@ -1,11 +1,11 @@
 import {
   ADD_COMMENT,
   addComment,
-  SET_COMMENTS, SET_COMMENTS_IS_LOADING,
-  SET_OFFER, SET_OFFER_IS_LOADING, setComments, setCommentsAreLoading,
+  SET_COMMENTS, SET_COMMENTS_IS_LOADING, SET_NEARBY_OFFERS, SET_NEARBY_OFFERS_ARE_LOADING,
+  SET_OFFER, SET_OFFER_IS_LOADING, setComments, setCommentsAreLoading, setNearbyOffers, setNearbyOffersAreLoading,
   setOffer, setOfferIsLoading
 } from "./slice";
-import {MOCK_ADAPTED_COMMENT, MOCK_ADAPTED_COMMENTS, MOCK_ADAPTED_OFFER} from "../../common-mock";
+import {MOCK_ADAPTED_COMMENT, MOCK_ADAPTED_COMMENTS, MOCK_ADAPTED_OFFER, MOCK_ADAPTED_OFFERS} from "../../common-mock";
 
 describe(`offer actions test`, () => {
   it(`setOffer is correct`, () => {
@@ -58,6 +58,26 @@ describe(`offer actions test`, () => {
     ).toStrictEqual(
         {
           type: SET_COMMENTS_IS_LOADING,
+          payload: true
+        }
+    );
+  });
+  it(`setNearbyOffers is correct`, function () {
+    expect(
+        setNearbyOffers(MOCK_ADAPTED_OFFERS)
+    ).toStrictEqual(
+        {
+          type: SET_NEARBY_OFFERS,
+          payload: MOCK_ADAPTED_OFFERS
+        }
+    );
+  });
+  it(`setNearbyOffersIsLoading is correct`, function () {
+    expect(
+        setNearbyOffersAreLoading(true)
+    ).toStrictEqual(
+        {
+          type: SET_NEARBY_OFFERS_ARE_LOADING,
           payload: true
         }
     );
