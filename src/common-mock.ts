@@ -3,19 +3,19 @@ import Comment from "./models/comment";
 import City from "./models/city";
 import SortType from "./models/sort-type";
 import Routes from "./routes";
-import {AuthorizationStatus, LoginPayload} from "./store/user/slice";
+import {AuthorizationStatus, LoginPayload} from "./store/user/user";
 import AuthInfo from "./models/auth-info";
 import {adaptDataToOffer} from "./adapters/offers";
 import {adaptDataToComment} from "./adapters/comments";
 import {CommentPost} from "./models/comment-post";
 import {adaptDataToAuthInfo} from "./adapters/auth-info";
-import {RootState} from "./store";
+import {RootState} from "./store/store";
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import {redirectMiddleware} from "./store/redirect";
+import {redirectMiddleware} from "./store/redirect/redirect";
 import {createMemoryHistory, MemoryHistory} from "history";
-import MockAdapter from "axios-mock-adapter";
-import {createAPI} from "./services/api";
+
+export const MOCK_ERROR_MESSAGE = `Password is incorrect!`;
 
 export const MOCK_OFFER_FROM_API = {
   "bedrooms": 3,
@@ -146,7 +146,8 @@ export const MOCK_INITIAL_STATE: RootState = {
   },
   user: {
     authorizationStatus: MOCK_AUTHORIZATION_STATUS,
-    authInfo: MOCK_ADAPTED_AUTH_INFO
+    authInfo: MOCK_ADAPTED_AUTH_INFO,
+    loginError: ``
   },
   offer: {
     offer: MOCK_ADAPTED_OFFER,
@@ -156,12 +157,13 @@ export const MOCK_INITIAL_STATE: RootState = {
     ],
     nearbyOffersIsLoading: false,
     comments: MOCK_ADAPTED_COMMENTS,
-    commentsAreLoading: false
+    commentsAreLoading: false,
+    commentsError: ``,
   },
   favorites: {
     favorites: MOCK_ADAPTED_OFFERS,
     isLoading: false
-  }
+  },
 };
 
 export const mockConfigureStore = (history: MemoryHistory = createMemoryHistory()) => configureStore(

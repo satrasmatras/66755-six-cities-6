@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-import Header from '../header';
+import Header from '../header/header';
 
 const EmptyMainPage = (): ReactElement => {
 

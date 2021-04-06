@@ -2,18 +2,15 @@ import React from "react";
 import {render} from "@testing-library/react";
 import {Router} from "react-router-dom";
 import browserHistory from "../../browser-history";
-import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
-import thunk from "redux-thunk";
 import OffersList from "./offers-list";
-import {MOCK_ADAPTED_OFFERS} from "../../common-mock";
+import {MOCK_ADAPTED_OFFERS, MOCK_INITIAL_STATE, mockConfigureStore} from "../../common-mock";
 
-const mockStore = configureStore([thunk]);
-const store = mockStore();
+const mockStore = mockConfigureStore();
 
 it(`Should offers list render correctly`, () => {
   const {container} = render(
-      <Provider store={store}>
+      <Provider store={mockStore(MOCK_INITIAL_STATE)}>
         <Router history={browserHistory}>
           <OffersList offers={MOCK_ADAPTED_OFFERS}/>
         </Router>

@@ -8,8 +8,8 @@ import {
   SET_AUTH_INFO,
   SET_AUTHORIZATION_STATUS,
 
-} from "./slice";
-import {REDIRECT_TO_ROUTE} from "../redirect/slice";
+} from "./user";
+import {REDIRECT_TO_ROUTE} from "../redirect/redirect";
 import Routes from "../../routes";
 const api = createAPI(undefined, undefined);
 
@@ -66,7 +66,7 @@ describe(`user async actions work correctly`, () => {
         });
       });
   });
-  it(`should login correctly`, () => {
+  it(`should logout correctly`, () => {
     const logoutLoader = logout();
 
     apiMock

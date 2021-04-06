@@ -1,4 +1,4 @@
-import {redirectMiddleware, redirectToRoute} from "./slice";
+import {redirectMiddleware, redirectToRoute} from "./redirect";
 import {createMemoryHistory} from "history";
 import Routes from "../../routes";
 

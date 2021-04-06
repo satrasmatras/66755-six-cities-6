@@ -1,12 +1,19 @@
 import offerReducer, {
   initialState,
   setComments,
-  setCommentsAreLoading,
+  setCommentsAreLoading, setCommentsError,
   setNearbyOffers, setNearbyOffersAreLoading,
   setOffer,
-  setOfferIsLoading
-} from "./slice";
-import {MOCK_ADAPTED_COMMENTS, MOCK_EMPTY_ACTION, MOCK_ADAPTED_OFFER, MOCK_ADAPTED_OFFERS} from "../../common-mock";
+  setOfferIsLoading, updateNearbyOffer
+} from "./offer";
+import {
+  MOCK_ADAPTED_COMMENTS,
+  MOCK_EMPTY_ACTION,
+  MOCK_ADAPTED_OFFER,
+  MOCK_ADAPTED_OFFERS,
+  MOCK_ERROR_MESSAGE
+} from "../../common-mock";
+import {updateItem} from "../../services/items";
 
 describe(`Offer reducer work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
@@ -64,5 +71,27 @@ describe(`Offer reducer work correctly`, () => {
     };
 
     expect(offerReducer(initialState, setNearbyOffersAreLoading(true))).toEqual(expectedState);
+  });
+  it(`Reducer should update nearby offer`, () => {
+    const state = {
+      ...initialState,
+      nearbyOffers: MOCK_ADAPTED_OFFERS
+    };
+
+    const expectedState = {
+      ...state,
+      nearbyOffers: updateItem(MOCK_ADAPTED_OFFERS, MOCK_ADAPTED_OFFER),
+    };
+
+    expect(offerReducer(state, updateNearbyOffer(MOCK_ADAPTED_OFFER))).toEqual(expectedState);
+  });
+  it(`Reducer should setCommentsError`, () => {
+
+    const expectedState = {
+      ...initialState,
+      commentsError: MOCK_ERROR_MESSAGE
+    };
+
+    expect(offerReducer(initialState, setCommentsError(MOCK_ERROR_MESSAGE))).toEqual(expectedState);
   });
 });

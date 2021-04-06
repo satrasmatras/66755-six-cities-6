@@ -1,5 +1,5 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse} from "axios";
-import {redirectToRoute} from "../store/redirect/slice";
+import {redirectToRoute} from "../store/redirect/redirect";
 import Routes from "../routes";
 
 const BASE_URL = `https://6.react.pages.academy/six-cities`;

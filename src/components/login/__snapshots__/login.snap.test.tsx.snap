@@ -154,6 +154,7 @@ exports[`Should login renders correctly 1`] = `
             >
               Sign in
             </button>
+            
           </form>
         </section>
         <section

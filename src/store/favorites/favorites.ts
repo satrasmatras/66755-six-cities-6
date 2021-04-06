@@ -2,12 +2,12 @@ import Offer from "../../models/offer";
 import {createAction, createReducer, createSlice} from "@reduxjs/toolkit";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
-import {RootState} from "../index";
+import {RootState} from "../store";
 import {AxiosInstance} from "axios";
 import {adaptDataToOffer} from "../../adapters/offers";
-import {updateOffer} from "../offers/slice";
+import {updateOffer} from "../offers/offers";
 import {deleteItem} from "../../services/items";
-import {setOffer} from "../offer/slice";
+import {setNearbyOffers, setOffer, updateNearbyOffer} from "../offer/offer";
 
 interface FavoritesState {
   favorites: Offer[],
@@ -59,6 +59,7 @@ export enum ToggleFavoriteTarget {
   MAIN,
   FAVORITES,
   OFFER,
+  NEARBY
 }
 
 export const getFavoriteToggle = (id: number, value: number) => `/favorite/${id}/${value}`;
@@ -75,6 +76,9 @@ export const toggleFavorite = (offer: Offer, target: ToggleFavoriteTarget) => as
       break;
     case ToggleFavoriteTarget.OFFER:
       next(setOffer(updated));
+      break;
+    case ToggleFavoriteTarget.NEARBY:
+      next(updateNearbyOffer(updated));
       break;
   }
 };

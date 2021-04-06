@@ -2,7 +2,7 @@ import React from "react";
 import {render, screen} from "@testing-library/react";
 import {Router} from "react-router-dom";
 import {Provider} from "react-redux";
-import {AuthorizationStatus} from "../../store/user/slice";
+import {AuthorizationStatus} from "../../store/user/user";
 import PrivateRoute from "./private-route";
 import {MOCK_ADAPTED_AUTH_INFO, MOCK_INITIAL_STATE, mockConfigureStore} from "../../common-mock";
 import {createMemoryHistory, MemoryHistory} from "history";

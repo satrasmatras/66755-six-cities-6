@@ -7,7 +7,7 @@ import {
   setSortType,
   UPDATE_OFFER,
   updateOffer
-} from "./slice";
+} from "./offers";
 import {MOCK_ADAPTED_OFFER, MOCK_ADAPTED_OFFERS, MOCK_SORT_TYPE} from "../../common-mock";
 
 describe(`setOffers actions test`, () => {

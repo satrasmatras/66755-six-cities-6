@@ -1,12 +1,12 @@
 import React, {ReactElement, useCallback, useEffect} from 'react';
 import {Link} from "react-router-dom";
 import Routes from "../../routes";
-import FavoritesList from "../favorites-list";
+import FavoritesList from "../favorites-list/favorites-list";
 import Header from "../header/header";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store";
-import Loader from "../loader";
-import {fetchFavorites, toggleFavorite, ToggleFavoriteTarget} from "../../store/favorites/slice";
+import {RootState} from "../../store/store";
+import Loader from "../loader/loader";
+import {fetchFavorites, toggleFavorite, ToggleFavoriteTarget} from "../../store/favorites/favorites";
 
 
 const FavoritesPage = (): ReactElement => {

@@ -1,8 +1,8 @@
-import {AuthorizationStatus, logout} from "../../store/user/slice";
+import {AuthorizationStatus, logout} from "../../store/user/user";
 import {Link} from "react-router-dom";
 import Routes from "../../routes";
 import React, {memo, FC, SyntheticEvent} from "react";
-import {RootState} from "../../store";
+import {RootState} from "../../store/store";
 import {useDispatch, useSelector} from "react-redux";
 
 const Header: FC = () => {

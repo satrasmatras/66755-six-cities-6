@@ -3,8 +3,8 @@ import {
   addComment,
   SET_COMMENTS, SET_COMMENTS_IS_LOADING, SET_NEARBY_OFFERS, SET_NEARBY_OFFERS_ARE_LOADING,
   SET_OFFER, SET_OFFER_IS_LOADING, setComments, setCommentsAreLoading, setNearbyOffers, setNearbyOffersAreLoading,
-  setOffer, setOfferIsLoading
-} from "./slice";
+  setOffer, setOfferIsLoading, UPDATE_NEARBY_OFFER, updateNearbyOffer
+} from "./offer";
 import {MOCK_ADAPTED_COMMENT, MOCK_ADAPTED_COMMENTS, MOCK_ADAPTED_OFFER, MOCK_ADAPTED_OFFERS} from "../../common-mock";
 
 describe(`offer actions test`, () => {
@@ -79,6 +79,16 @@ describe(`offer actions test`, () => {
         {
           type: SET_NEARBY_OFFERS_ARE_LOADING,
           payload: true
+        }
+    );
+  });
+  it(`updateNearbyOffer is correct`, function () {
+    expect(
+        updateNearbyOffer(MOCK_ADAPTED_OFFER)
+    ).toStrictEqual(
+        {
+          type: UPDATE_NEARBY_OFFER,
+          payload: MOCK_ADAPTED_OFFER
         }
     );
   });

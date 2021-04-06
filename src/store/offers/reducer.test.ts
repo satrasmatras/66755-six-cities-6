@@ -1,4 +1,4 @@
-import offersReducer, {initialState, setIsLoading, setOffers, setSortType} from "./slice";
+import offersReducer, {initialState, setIsLoading, setOffers, setSortType} from "./offers";
 import {MOCK_EMPTY_ACTION, MOCK_ADAPTED_OFFERS, MOCK_SORT_TYPE} from "../../common-mock";
 
 describe(`Offers reducer work correctly`, () => {

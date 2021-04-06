@@ -1,5 +1,5 @@
 import {MOCK_CITY} from "../../common-mock";
-import {CHANGE_CITY, changeCity} from "./slice";
+import {CHANGE_CITY, changeCity} from "./city";
 
 describe(`city actions test`, () => {
   it(`setOffer is correct`, () => {

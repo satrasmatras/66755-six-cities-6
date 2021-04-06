@@ -1,25 +1,27 @@
 import React, {ReactElement, useCallback, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import Offer, {calculateRatingBarWidth} from "../../models/offer";
+import {calculateRatingBarWidth} from "../../models/offer";
 import {toCapitalize} from "../../utils";
-import CreateCommentForm from "../create-comment-form";
-import Map from "../map";
-import ReviewsList from "../reviews-list";
-import NearPlacesList from "../near-places-list";
+import CreateCommentForm from "../create-comment-form/create-comment-form";
+import Map from "../map/map";
+import ReviewsList from "../reviews-list/reviews-list";
+import NearPlacesList from "../near-places-list/near-places-list";
 import {
   getNearbyOffers,
   loadOfferById,
   loadOfferComments,
   selectNearbyOffers,
   selectNearbyOffersIsLoading
-} from "../../store/offer/slice";
-import Loader from "../loader";
+} from "../../store/offer/offer";
+import Loader from "../loader/loader";
 import Header from "../header/header";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store";
+import {RootState} from "../../store/store";
 import {selectIsAuthorized} from "../../selectors/user";
-import {toggleFavorite, ToggleFavoriteTarget} from "../../store/favorites/slice";
-import {selectCommentsCount, selectLastTenComments} from "../../selectors/comments";
+import {toggleFavorite, ToggleFavoriteTarget} from "../../store/favorites/favorites";
+import {selectCommentsCount, selectLastComments} from "../../selectors/comments";
+import {redirectToRoute} from "../../store/redirect/redirect";
+import Routes from "../../routes";
 
 interface OfferPageParams {
   id: string
@@ -31,15 +33,24 @@ const OfferPage = (): ReactElement => {
     offerIsLoading,
     commentsAreLoading,
   } = useSelector((state: RootState) => state.offer);
-  const comments = useSelector(selectLastTenComments);
+  const comments = useSelector(selectLastComments);
   const commentsCount = useSelector(selectCommentsCount);
   const isAuthorized = useSelector(selectIsAuthorized);
   const dispatch = useDispatch();
   const handleBookmark = useCallback((offer) => dispatch(toggleFavorite(offer, ToggleFavoriteTarget.OFFER)), []);
+  const handleBookmarkNearby = useCallback((offer) => dispatch(toggleFavorite(offer, ToggleFavoriteTarget.NEARBY)), []);
 
   const {id} = useParams<OfferPageParams>();
   const nearbyOffers = useSelector(selectNearbyOffers);
   const nearbyOffersIsLoading = useSelector(selectNearbyOffersIsLoading);
+
+  const handleClick = () => {
+    if (isAuthorized) {
+      handleBookmark(offer);
+    } else {
+      dispatch(redirectToRoute(Routes.LOGIN));
+    }
+  };
 
   useEffect(() => {
     dispatch(loadOfferById(Number(id)));
@@ -105,7 +116,7 @@ const OfferPage = (): ReactElement => {
                   <button
                     className={`property__bookmark-button ${offer?.isFavorite ? `property__bookmark-button--active` : ``} button`}
                     type="button"
-                    onClick={() => handleBookmark(offer)}
+                    onClick={handleClick}
                   >
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
@@ -195,7 +206,7 @@ const OfferPage = (): ReactElement => {
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <NearPlacesList offers={nearbyOffers} />
+              <NearPlacesList offers={nearbyOffers} handleBookmark={handleBookmarkNearby} />
             </section>
           </div>
         </main>

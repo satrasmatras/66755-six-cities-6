@@ -1,9 +1,9 @@
 import React from "react";
 import {Redirect, Route} from "react-router";
-import {AuthorizationStatus} from "../../store/user/slice";
+import {AuthorizationStatus} from "../../store/user/user";
 import Routes from "../../routes";
-import {RootState} from "../../store";
-import Loader from "../loader";
+import {RootState} from "../../store/store";
+import Loader from "../loader/loader";
 import {useSelector} from "react-redux";
 
 interface PrivateRouteProps {

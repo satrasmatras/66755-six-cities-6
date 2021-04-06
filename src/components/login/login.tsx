@@ -1,16 +1,18 @@
 import React, {ReactElement, SyntheticEvent, useState} from 'react';
 import {Link} from 'react-router-dom';
 import Routes from '../../routes';
-import {useDispatch} from "react-redux";
-import {login} from "../../store/user/slice";
+import {useDispatch, useSelector} from "react-redux";
+import {login, selectLoginError} from "../../store/user/user";
 
 const Login = (): ReactElement => {
   const [email, setEmail] = useState(``);
   const [password, setPassword] = useState(``);
 
+  const loginError = useSelector(selectLoginError);
+
   const dispatch = useDispatch();
 
-  const handleClick = (event: SyntheticEvent) => {
+  const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
 
     const data = {
@@ -75,7 +77,7 @@ const Login = (): ReactElement => {
           <div className="page__login-container container">
             <section className="login">
               <h1 className="login__title" data-testid="login-title">Sign in</h1>
-              <form className="login__form form" action="#" method="post">
+              <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">E-mail</label>
                   <input
@@ -103,8 +105,12 @@ const Login = (): ReactElement => {
                 <button
                   className="login__submit form__submit button"
                   type="submit"
-                  onClick={handleClick}
                 >Sign in</button>
+                {
+                  loginError && (
+                    <strong>{loginError}</strong>
+                  )
+                }
               </form>
             </section>
             <section className="locations locations--login locations--current">

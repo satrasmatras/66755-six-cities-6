@@ -1,4 +1,4 @@
-import offerReducer, {changeCity, initialState} from './slice';
+import offerReducer, {changeCity, initialState} from './city';
 import {MOCK_CITY, MOCK_EMPTY_ACTION} from "../../common-mock";
 
 describe(`City reducers work correctly`, () => {

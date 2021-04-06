@@ -1,7 +1,7 @@
-import React, {ReactElement, Fragment, SyntheticEvent, useState, useRef} from 'react';
+import React, {ReactElement, Fragment, SyntheticEvent, useState, useRef, useEffect} from 'react';
 import {CommentPost} from "../../models/comment-post";
-import {postComment} from "../../store/offer/slice";
-import {useDispatch} from "react-redux";
+import {postComment, selectCommentsError} from "../../store/offer/offer";
+import {useDispatch, useSelector} from "react-redux";
 
 interface RatingItem {
   title: string,
@@ -45,7 +45,9 @@ interface CreateCommentFormProps {
 
 const CreateCommentForm = ({offerId}: CreateCommentFormProps): ReactElement => {
   const [data, setData] = useState<CommentPost>(INITIAL_DATA);
+  const [valid, setValid] = useState<boolean>(false);
   const formRef = useRef(null);
+  const commentsError = useSelector(selectCommentsError);
 
   const dispatch = useDispatch();
 
@@ -58,9 +60,14 @@ const CreateCommentForm = ({offerId}: CreateCommentFormProps): ReactElement => {
     event.preventDefault();
     dispatch(postComment(data, offerId));
     formRef.current.reset();
+    setData(INITIAL_DATA);
   };
 
-  const buttonIsEnabled = data.comment.length >= MIN_REVIEW_LENGTH && data.comment.length <= MAX_REVIEW_LENGTH;
+  useEffect(() => {
+    const valid = data.comment.length >= MIN_REVIEW_LENGTH
+      && data.comment.length <= MAX_REVIEW_LENGTH;
+    setValid(valid);
+  }, [data]);
 
   return (
     <form
@@ -115,11 +122,16 @@ const CreateCommentForm = ({offerId}: CreateCommentFormProps): ReactElement => {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!buttonIsEnabled}
+          disabled={!valid}
         >
           Submit
         </button>
       </div>
+      {
+        commentsError && (
+          <strong>{commentsError}</strong>
+        )
+      }
     </form>
   );
 };

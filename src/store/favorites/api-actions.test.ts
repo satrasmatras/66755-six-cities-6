@@ -8,16 +8,16 @@ import {
   SET_IS_LOADING,
   toggleFavorite,
   ToggleFavoriteTarget
-} from "./slice";
+} from "./favorites";
 import {
   MOCK_ADAPTED_OFFER,
   MOCK_ADAPTED_OFFERS,
   MOCK_OFFER_FROM_API,
   MOCK_OFFERS_FROM_API
 } from "../../common-mock";
-import {UPDATE_OFFER} from "../offers/slice";
+import {UPDATE_OFFER} from "../offers/offers";
 import {adaptDataToOffer} from "../../adapters/offers";
-import {SET_OFFER} from "../offer/slice";
+import {SET_OFFER, UPDATE_NEARBY_OFFER} from "../offer/offer";
 
 const api = createAPI(undefined, undefined);
 
@@ -133,6 +133,34 @@ describe(`async actions work correctly`, () => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledWith({
           type: SET_OFFER,
+          payload: expectedPayload
+        });
+      });
+  });
+
+  it(`should correct toggle favorite for nearbyoffer`, () => {
+    const {id} = MOCK_ADAPTED_OFFER;
+    const expectedIsFavorite = Number(!MOCK_ADAPTED_OFFER.isFavorite);
+    const toggleFavoriteUrl = getFavoriteToggle(id, expectedIsFavorite);
+
+    const toggleFavoriteToNearby = toggleFavorite(MOCK_ADAPTED_OFFER, ToggleFavoriteTarget.NEARBY);
+
+    const expectedOfferFromApi = {
+      ...MOCK_OFFER_FROM_API,
+      [`is_favorite`]: expectedIsFavorite
+    };
+
+    const expectedPayload = adaptDataToOffer(expectedOfferFromApi);
+
+    apiMock
+      .onPost(toggleFavoriteUrl)
+      .reply(200, expectedOfferFromApi);
+
+    return toggleFavoriteToNearby(dispatch, undefined, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledWith({
+          type: UPDATE_NEARBY_OFFER,
           payload: expectedPayload
         });
       });

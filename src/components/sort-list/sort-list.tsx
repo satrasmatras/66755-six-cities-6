@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {RootState} from "../../store";
+import {RootState} from "../../store/store";
 import SortType from "../../models/sort-type";
-import {setSortType} from "../../store/offers/slice";
+import {setSortType} from "../../store/offers/offers";
 import {useDispatch, useSelector} from "react-redux";
 
 const SortTypesMap = {

@@ -2,11 +2,13 @@ import Offer from "../../models/offer";
 import Comment from "../../models/comment";
 import {Dispatch} from "redux";
 import {AxiosInstance} from "axios";
-import {RootState} from "../index";
+import {RootState} from "../store";
 import {adaptDataToOffer} from "../../adapters/offers";
 import {adaptDataToComment} from "../../adapters/comments";
 import {CommentPost} from "../../models/comment-post";
 import {createAction, createReducer} from "@reduxjs/toolkit";
+import {updateItem} from "../../services/items";
+import {SHOW_ERROR_TIME} from "../../constants";
 
 interface OfferState {
   offer: Offer,
@@ -15,6 +17,7 @@ interface OfferState {
   nearbyOffersIsLoading: boolean,
   offerIsLoading: boolean,
   commentsAreLoading: boolean,
+  commentsError: string,
 }
 
 export const initialState: OfferState = {
@@ -23,7 +26,8 @@ export const initialState: OfferState = {
   nearbyOffers: [],
   nearbyOffersIsLoading: false,
   offerIsLoading: false,
-  commentsAreLoading: false
+  commentsAreLoading: false,
+  commentsError: ``,
 };
 
 export const SET_OFFER = `offer/setOffer`;
@@ -41,8 +45,14 @@ export const setOfferIsLoading = createAction<boolean>(SET_OFFER_IS_LOADING);
 export const SET_COMMENTS_IS_LOADING = `offer/setCommentsAreLoading`;
 export const setCommentsAreLoading = createAction<boolean>(SET_COMMENTS_IS_LOADING);
 
+export const SET_COMMENTS_ERROR = `offer/setCommentsError`;
+export const setCommentsError = createAction<string>(SET_COMMENTS_ERROR);
+
 export const SET_NEARBY_OFFERS = `offers/setNearbyOffers`;
 export const setNearbyOffers = createAction<Offer[]>(SET_NEARBY_OFFERS);
+
+export const UPDATE_NEARBY_OFFER = `offers/updateNearbyOffers`;
+export const updateNearbyOffer = createAction<Offer>(UPDATE_NEARBY_OFFER);
 
 export const SET_NEARBY_OFFERS_ARE_LOADING = `offers/setNearbyOffersAreLoading`;
 export const setNearbyOffersAreLoading = createAction<boolean>(SET_NEARBY_OFFERS_ARE_LOADING);
@@ -50,6 +60,9 @@ export const setNearbyOffersAreLoading = createAction<boolean>(SET_NEARBY_OFFERS
 const offerReducer = createReducer(initialState, (builder) => {
   builder.addCase(setOffer, (state, action) => {
     state.offer = action.payload;
+  });
+  builder.addCase(setOfferIsLoading, (state, action) => {
+    state.offerIsLoading = action.payload;
   });
   builder.addCase(setComments, (state, action) => {
     state.comments = action.payload;
@@ -63,8 +76,11 @@ const offerReducer = createReducer(initialState, (builder) => {
   builder.addCase(setNearbyOffersAreLoading, (state, action) => {
     state.nearbyOffersIsLoading = action.payload;
   });
-  builder.addCase(setOfferIsLoading, (state, action) => {
-    state.offerIsLoading = action.payload;
+  builder.addCase(setCommentsError, (state, action) => {
+    state.commentsError = action.payload;
+  });
+  builder.addCase(updateNearbyOffer, (state, action) => {
+    state.nearbyOffers = updateItem(state.nearbyOffers, action.payload);
   });
   builder.addCase(setCommentsAreLoading, (state, action) => {
     state.commentsAreLoading = action.payload;
@@ -96,11 +112,19 @@ export const loadOfferComments = (id: number) => async (dispatch: Dispatch, _: R
 
 export const postComment = (commentPost: CommentPost, id: number) => async (dispatch: Dispatch, _: RootState, api: AxiosInstance) => {
   dispatch(setCommentsAreLoading(true));
-  const response = await api.post(getCommentsRoute(id), commentPost);
-  const comments = response
-    .data
-    .map(adaptDataToComment);
-  dispatch(setComments(comments));
+  try {
+    const response = await api.post(getCommentsRoute(id), commentPost);
+    const comments = response
+      .data
+      .map(adaptDataToComment);
+    dispatch(setComments(comments));
+  } catch (err) {
+    dispatch(setCommentsError(err.message));
+    setTimeout(() => {
+      dispatch(setCommentsError(``));
+    }, SHOW_ERROR_TIME);
+  }
+
   dispatch(setCommentsAreLoading(false));
 };
 
@@ -116,5 +140,6 @@ export const getNearbyOffers = (offerId: number) => async (dispatch: Dispatch, _
 
 export const selectNearbyOffers = (state: RootState) => state.offer.nearbyOffers;
 export const selectNearbyOffersIsLoading = (state: RootState) => state.offer.nearbyOffersIsLoading;
+export const selectCommentsError = (state: RootState) => state.offer.commentsError;
 
 export default offerReducer;

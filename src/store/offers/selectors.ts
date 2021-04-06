@@ -1,5 +1,5 @@
 import {createSelector} from "reselect";
-import {RootState} from "../index";
+import {RootState} from "../store";
 import Offer from "../../models/offer";
 import {sortOffersBySortType} from "../../selectors/offers";
 

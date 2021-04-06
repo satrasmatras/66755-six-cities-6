@@ -1,5 +1,5 @@
 import {MOCK_ROUTE} from "../../common-mock";
-import {REDIRECT_TO_ROUTE, redirectToRoute} from "../redirect/slice";
+import {REDIRECT_TO_ROUTE, redirectToRoute} from "./redirect";
 
 describe(`redirect actions test`, () => {
   it(`redirectToRoute is correct`, () => {

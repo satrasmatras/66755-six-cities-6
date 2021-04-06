@@ -3,7 +3,7 @@ import favoritesReducer, {
   setFavorites,
   setIsLoading,
   deleteFavorite
-} from './slice';
+} from './favorites';
 import {MOCK_EMPTY_ACTION, MOCK_ADAPTED_OFFER, MOCK_ADAPTED_OFFERS} from "../../common-mock";
 import {deleteItem} from "../../services/items";
 

@@ -11,7 +11,7 @@ import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import OfferPage from "./offer-page";
 
-describe(`Test routing`, () => {
+describe(`Offer page`, () => {
   const history = createMemoryHistory();
   const mockFactory = configureStore([thunk]);
 

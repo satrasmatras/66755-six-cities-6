@@ -4,7 +4,10 @@ import {Link} from "react-router-dom";
 import Offer, {calculateRatingBarWidth} from "../../models/offer";
 import OfferCardTypes from "../../models/offer-card-types";
 import {toCapitalize} from "../../utils";
-import {getOfferRoute} from "../../routes";
+import Routes, {getOfferRoute} from "../../routes";
+import {useDispatch, useSelector} from "react-redux";
+import {selectIsAuthorized} from "../../selectors/user";
+import {redirectToRoute} from "../../store/redirect/redirect";
 
 interface OfferCardProps {
   cardType: OfferCardTypes,
@@ -24,6 +27,9 @@ const OfferCard = ({cardType, offer, handleHover = null, handleBookmark}: OfferC
     type,
     rating
   } = offer;
+
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuthorized);
 
   let articleClass = ``;
   let imageWrapperClass = ``;
@@ -57,6 +63,14 @@ const OfferCard = ({cardType, offer, handleHover = null, handleBookmark}: OfferC
       break;
     }
   }
+
+  const handleClick = () => {
+    if (isAuth) {
+      handleBookmark(offer);
+    } else {
+      dispatch(redirectToRoute(Routes.LOGIN));
+    }
+  };
 
   const handleMouseMove = () => {
     if (handleHover) {
@@ -101,7 +115,7 @@ const OfferCard = ({cardType, offer, handleHover = null, handleBookmark}: OfferC
           <button
             className={`place-card__bookmark-button ${isFavorite ? `place-card__bookmark-button--active` : ``} button`}
             type="button"
-            onClick={() => handleBookmark(offer)}
+            onClick={handleClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"/>

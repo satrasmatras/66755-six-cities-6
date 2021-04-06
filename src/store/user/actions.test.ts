@@ -1,5 +1,12 @@
-import {MOCK_ADAPTED_AUTH_INFO, MOCK_AUTHORIZATION_STATUS} from "../../common-mock";
-import {SET_AUTH_INFO, SET_AUTHORIZATION_STATUS, setAuthInfo, setAuthorizationStatus} from "./slice";
+import {MOCK_ADAPTED_AUTH_INFO, MOCK_AUTHORIZATION_STATUS, MOCK_ERROR_MESSAGE} from "../../common-mock";
+import {
+  SET_AUTH_INFO,
+  SET_AUTHORIZATION_STATUS,
+  SET_LOGIN_ERROR,
+  setAuthInfo,
+  setAuthorizationStatus,
+  setLoginError
+} from "./user";
 
 describe(`user actions test`, () => {
 
@@ -21,6 +28,17 @@ describe(`user actions test`, () => {
         {
           type: SET_AUTH_INFO,
           payload: MOCK_ADAPTED_AUTH_INFO
+        }
+    );
+  });
+
+  it(`setLoginError is correct`, () => {
+    expect(
+        setLoginError(MOCK_ERROR_MESSAGE)
+    ).toStrictEqual(
+        {
+          type: SET_LOGIN_ERROR,
+          payload: MOCK_ERROR_MESSAGE
         }
     );
   });

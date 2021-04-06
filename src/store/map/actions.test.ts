@@ -1,7 +1,7 @@
 import {
   UPDATE_HOVERED_OFFER,
   updateHoveredOffer
-} from "./slice";
+} from "./map";
 import {MOCK_ADAPTED_OFFER} from "../../common-mock";
 
 describe(`map actions test`, () => {

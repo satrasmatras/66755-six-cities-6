@@ -4,7 +4,7 @@ import {Router} from "react-router-dom";
 import browserHistory from "../../browser-history";
 import CitiesList from "./cities-list";
 import {Provider} from "react-redux";
-import {initialState} from "../../store/city/slice";
+import {initialState} from "../../store/city/city";
 import configureStore from "redux-mock-store";
 
 const store = configureStore(undefined)({city: initialState});

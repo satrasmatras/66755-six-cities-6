@@ -4,7 +4,7 @@ import {Router} from "react-router-dom";
 import browserHistory from "../../browser-history";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
-import {initialState as offersInitialState} from "../../store/offers/slice";
+import {initialState as offersInitialState} from "../../store/offers/offers";
 import thunk from "redux-thunk";
 import SortList from "./sort-list";
 

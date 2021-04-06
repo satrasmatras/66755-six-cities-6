@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-import Review from "../review";
+import Review from "../review/review";
 import Comment from "../../models/comment";
 
 interface ReviewsListProps {

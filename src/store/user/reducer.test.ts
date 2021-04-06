@@ -1,8 +1,8 @@
-import userReducer, {initialState, setAuthInfo, setAuthorizationStatus} from "./slice";
+import userReducer, {initialState, setAuthInfo, setAuthorizationStatus, setLoginError} from "./user";
 import {
   MOCK_ADAPTED_AUTH_INFO,
   MOCK_AUTHORIZATION_STATUS,
-  MOCK_EMPTY_ACTION,
+  MOCK_EMPTY_ACTION, MOCK_ERROR_MESSAGE,
 } from "../../common-mock";
 
 describe(`Offers reducer work correctly`, () => {
@@ -26,5 +26,14 @@ describe(`Offers reducer work correctly`, () => {
     };
 
     expect(userReducer(initialState, setAuthInfo(MOCK_ADAPTED_AUTH_INFO))).toEqual(expectedState);
+  });
+
+  it(`Reducer should set set loginError`, () => {
+    const expectedState = {
+      ...initialState,
+      loginError: MOCK_ERROR_MESSAGE
+    };
+
+    expect(userReducer(initialState, setLoginError(MOCK_ERROR_MESSAGE))).toEqual(expectedState);
   });
 });

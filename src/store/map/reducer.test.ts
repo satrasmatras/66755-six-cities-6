@@ -1,4 +1,4 @@
-import mapReducer, {initialState, updateHoveredOffer} from "./slice";
+import mapReducer, {initialState, updateHoveredOffer} from "./map";
 import {MOCK_EMPTY_ACTION, MOCK_ADAPTED_OFFER} from "../../common-mock";
 
 describe(`Map reducer work correctly`, () => {

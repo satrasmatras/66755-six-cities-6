@@ -1,6 +1,5 @@
 import React, {ReactElement, useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
-import OfferCard from "../offer-card";
+import OfferCard from "../offer-card/offer-card";
 import OfferCardTypes from "../../models/offer-card-types";
 import Offer from "../../models/offer";
 import {toCapitalize} from "../../utils";
@@ -48,7 +47,7 @@ const FavoritesList = ({favoriteOffers, handleBookmark}: FavoritesListProps): Re
             </div>
             <div className="favorites__places">
               {
-                offers.map((offer: Offer, i: number) => <OfferCard cardType={OfferCardTypes.FAVORITE} key={i} offer={offer} handleBookmark={handleBookmark}/>)}
+                offers.map((offer: Offer, i: number) => <OfferCard cardType={OfferCardTypes.FAVORITE} key={`favorite-card-${i}`} offer={offer} handleBookmark={handleBookmark}/>)}
             </div>
           </li>
         );

@@ -5,7 +5,7 @@ import {
   SET_IS_LOADING,
   setFavorites,
   setIsLoading
-} from "./slice";
+} from "./favorites";
 import {MOCK_ADAPTED_OFFER, MOCK_ADAPTED_OFFERS} from "../../common-mock";
 
 describe(`favorites actions test`, () => {

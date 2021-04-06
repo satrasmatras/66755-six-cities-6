@@ -1,10 +1,10 @@
 import React, {ReactElement, useCallback} from "react";
 import Offer from "../../models/offer";
-import OfferCard from "../offer-card";
+import OfferCard from "../offer-card/offer-card";
 import OfferCardTypes from "../../models/offer-card-types";
-import {updateHoveredOffer} from "../../store/map/slice";
+import {updateHoveredOffer} from "../../store/map/map";
 import {useDispatch} from "react-redux";
-import {toggleFavorite, ToggleFavoriteTarget} from "../../store/favorites/slice";
+import {toggleFavorite, ToggleFavoriteTarget} from "../../store/favorites/favorites";
 
 interface OffersListProps {
   offers: Offer[],
@@ -22,7 +22,7 @@ const OffersList = ({offers}: OffersListProps): ReactElement => {
           return (
             <OfferCard
               cardType={OfferCardTypes.CITY}
-              key={i}
+              key={`offer-card-${i}`}
               offer={offer}
               handleHover={handleHover}
               handleBookmark={handleBookmark}

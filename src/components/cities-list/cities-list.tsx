@@ -1,7 +1,7 @@
 import React, {memo, ReactElement} from 'react';
 import City from '../../models/city';
-import {RootState} from "../../store";
-import {changeCity} from "../../store/city/slice";
+import {RootState} from "../../store/store";
+import {changeCity} from "../../store/city/city";
 import {CITIES} from "../../mocks/cities";
 import {useDispatch, useSelector} from "react-redux";
 

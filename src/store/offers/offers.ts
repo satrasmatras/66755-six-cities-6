@@ -3,7 +3,7 @@ import Offer from "../../models/offer";
 import {createAction, createReducer} from "@reduxjs/toolkit";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
-import {RootState} from "../index";
+import {RootState} from "../store";
 import {AxiosInstance} from "axios";
 import {adaptDataToOffer} from "../../adapters/offers";
 import {updateItem} from "../../services/items";

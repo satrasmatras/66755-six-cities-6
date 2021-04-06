@@ -5,7 +5,7 @@ import browserHistory from "../../browser-history";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 import EmptyMainPage from "./empty-main-page";
-import {initialState} from "../../store/user/slice";
+import {initialState} from "../../store/user/user";
 
 const store = configureStore(undefined)({user: initialState});
 

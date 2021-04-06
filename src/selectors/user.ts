@@ -1,6 +1,6 @@
-import {RootState} from "../store";
+import {RootState} from "../store/store";
 import {createSelector} from "reselect";
-import {AuthorizationStatus} from "../store/user/slice";
+import {AuthorizationStatus} from "../store/user/user";
 
 const selectAuthorizationStatus = (state: RootState) => state.user.authorizationStatus;
 

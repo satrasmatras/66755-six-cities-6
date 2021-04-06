@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app';
+import App from './components/app/app';
 import {Provider} from 'react-redux';
-import {store} from './store';
-import {checkLogin} from "./store/user/slice";
+import {store} from './store/store';
+import {checkLogin} from "./store/user/user";
 import {Router} from "react-router-dom";
 import browserHistory from "./browser-history";
 
@@ -19,3 +19,6 @@ ReactDOM.render(
     </Router>,
     document.querySelector(`#root`)
 );
+
+// TODO: при открытии любой страницы если пользователь не авторизован сначала всегда перенаправляет на страницу логина
+// todo: если отправить несколько отзывов подряд возможна такая ситуация https://prnt.sc/114yk66 или вообще такая https://prnt.sc/114yl6a, при этом если нажать на кнопку отзыв оставляется такой же как и предыдущий

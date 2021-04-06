@@ -1,17 +1,17 @@
 import React, {ReactElement, useEffect} from 'react';
 import Offer from "../../models/offer";
-import OffersList from "../offers-list";
-import Map from "../map";
-import CitiesList from "../cities-list";
-import {RootState} from "../../store";
+import OffersList from "../offers-list/offers-list";
+import Map from "../map/map";
+import CitiesList from "../cities-list/cities-list";
+import {RootState} from "../../store/store";
 import {useDispatch, useSelector} from "react-redux";
 import City from "../../models/city";
-import SortList from "../sort-list";
-import {fetchOffers} from "../../store/offers/slice";
-import Loader from "../loader";
+import SortList from "../sort-list/sort-list";
+import {fetchOffers} from "../../store/offers/offers";
+import Loader from "../loader/loader";
 import Header from "../header/header";
 import {selectSortedOffers} from "../../store/offers/selectors";
-import EmptyMainPage from "../empty-main-page";
+import EmptyMainPage from "../empty-main-page/empty-main-page";
 
 const MainPage = (): ReactElement => {
   const offers: Offer[] = useSelector(selectSortedOffers);

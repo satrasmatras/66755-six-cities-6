@@ -1,7 +1,7 @@
 import {createAPI} from "../../services/api";
 import MockAdapter from "axios-mock-adapter";
 import {MOCK_ADAPTED_OFFERS, MOCK_OFFERS_FROM_API} from "../../common-mock";
-import {ApiRoutes, fetchOffers, SET_IS_LOADING, SET_OFFERS} from "./slice";
+import {ApiRoutes, fetchOffers, SET_IS_LOADING, SET_OFFERS} from "./offers";
 const api = createAPI(undefined, undefined);
 
 describe(`offer async actions work correctly`, () => {

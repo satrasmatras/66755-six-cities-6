@@ -20,7 +20,7 @@ import {
   SET_NEARBY_OFFERS_ARE_LOADING,
   SET_OFFER,
   SET_OFFER_IS_LOADING
-} from "./slice";
+} from "./offer";
 import {CommentPost} from "../../models/comment-post";
 import {adaptDataToComment} from "../../adapters/comments";
 const api = createAPI(undefined, undefined);
