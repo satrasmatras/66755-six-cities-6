@@ -7,7 +7,6 @@ import {Provider} from "react-redux";
 import {initialState as userInitialState} from "../../store/user/user";
 import thunk from "redux-thunk";
 import {initialState as offersInitialState} from "../../store/offers/offers";
-import Header from "../header/header";
 import Map from "./map";
 import {MOCK_ADAPTED_OFFER, MOCK_ADAPTED_OFFERS, MOCK_CITY} from "../../common-mock";
 

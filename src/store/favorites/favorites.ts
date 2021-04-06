@@ -1,5 +1,5 @@
 import Offer from "../../models/offer";
-import {createAction, createReducer, createSlice} from "@reduxjs/toolkit";
+import {createAction, createReducer} from "@reduxjs/toolkit";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {RootState} from "../store";
@@ -7,7 +7,7 @@ import {AxiosInstance} from "axios";
 import {adaptDataToOffer} from "../../adapters/offers";
 import {updateOffer} from "../offers/offers";
 import {deleteItem} from "../../services/items";
-import {setNearbyOffers, setOffer, updateNearbyOffer} from "../offer/offer";
+import {setOffer, updateNearbyOffer} from "../offer/offer";
 
 interface FavoritesState {
   favorites: Offer[],

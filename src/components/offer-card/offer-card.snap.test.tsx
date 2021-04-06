@@ -2,12 +2,11 @@ import React from "react";
 import {render} from "@testing-library/react";
 import OfferCard from "./offer-card";
 import OfferCardTypes from "../../models/offer-card-types";
-import {MOCK_ADAPTED_OFFER, MOCK_INITIAL_STATE, mockConfigureStore} from "../../common-mock";
+import {MOCK_ADAPTED_OFFER, MOCK_INITIAL_STATE} from "../../common-mock";
 import {Router} from "react-router-dom";
 import browserHistory from "../../browser-history";
 import * as redux from "react-redux";
 import {Provider} from "react-redux";
-import {createMemoryHistory} from "history";
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
 

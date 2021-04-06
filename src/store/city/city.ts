@@ -1,5 +1,5 @@
 import {CITIES} from "../../mocks/cities";
-import {createAction, createReducer, createSlice} from "@reduxjs/toolkit";
+import {createAction, createReducer} from "@reduxjs/toolkit";
 import City from "../../models/city";
 
 export interface CityState {

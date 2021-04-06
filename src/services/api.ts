@@ -1,6 +1,4 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse} from "axios";
-import {redirectToRoute} from "../store/redirect/redirect";
-import Routes from "../routes";
 
 const BASE_URL = `https://6.react.pages.academy/six-cities`;
 const TIMEOUT = 5000;
